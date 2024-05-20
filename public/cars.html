@@ -256,7 +256,6 @@
     <div id="nav-content">
 
         <div style="background-color: #0ea5e9;color: black; border-radius: 15px;padding-left:10px;margin-right: 15px;" class="nav-button" id="new-reservation-button">&nbsp; <i class="bi bi-plus-square"></i> &nbsp; <span>New Reservation</span></div>
-        <div class="nav-button" id="dashboard-button">&nbsp; <i class="bi bi-stopwatch"></i>&nbsp; <span>Express Reservation</span></div>
         <hr>
         <div class="nav-button" id="reservations-button">&nbsp; <i class="bi bi-file-check"></i> &nbsp; <span>Reservations</span></div>
         <div class="nav-button" id="historique-button">&nbsp; <i class="bi bi-clock-history"></i> &nbsp; <span>Historique</span></div>
@@ -265,6 +264,8 @@
         <hr>
         <div class="nav-button" id="deconnexion-button">&nbsp; <i class="bi bi-box-arrow-left"></i> &nbsp; <span>Deconnexion</span></div>
         <hr/>
+        <div class="nav-button" id="dashboard-button">&nbsp; <i class="bi bi-stopwatch"></i>&nbsp; <span>Express Reservation (A venir )</span></div>
+
         <div id="nav-content-highlight"></div>
     </div>
     <input id="nav-footer-toggle" type="checkbox"/>
@@ -279,7 +280,7 @@
 
 <script>
     document.getElementById('dashboard-button').addEventListener('click', function() {
-        window.location.href = '/Dashboard';
+        window.location.href = '/quick-reservation';
     });
 
     document.getElementById('new-reservation-button').addEventListener('click', function() {
@@ -307,7 +308,6 @@
     });
 
 </script>
-
 <script>
     // Get the manager's name from local storage
     var managerName = localStorage.getItem('manager_name');

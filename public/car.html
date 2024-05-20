@@ -66,8 +66,82 @@
       rel="stylesheet"
       href="tailwind.css"
     />
+    <link rel="stylesheet" href="./assets/css/navbar.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
   </head>
-  <body>
+
+  <body class="bg-gray-100" id="body">
+  <div id="nav-bar" style="z-index: 50">
+    <input id="nav-toggle" type="checkbox"/>
+    <div id="nav-header"><a id="nav-title" href="/dashboard" target="_blank">SwiftCar</a>
+      <label for="nav-toggle"><span id="nav-toggle-burger"></span></label>
+      <hr/>
+    </div>
+    <div id="nav-content">
+
+      <div style="background-color: #0ea5e9;color: black; border-radius: 15px;padding-left:10px;margin-right: 15px;" class="nav-button" id="new-reservation-button">&nbsp; <i class="bi bi-plus-square"></i> &nbsp; <span>New Reservation</span></div>
+      <hr>
+      <div class="nav-button" id="reservations-button">&nbsp; <i class="bi bi-file-check"></i> &nbsp; <span>Reservations</span></div>
+      <div class="nav-button" id="historique-button">&nbsp; <i class="bi bi-clock-history"></i> &nbsp; <span>Historique</span></div>
+      <div class="nav-button" id="voitures-button">&nbsp; <i class="bi bi-car-front"></i> &nbsp; <span>Voitures</span></div>
+      <div class="nav-button" id="clients-button">&nbsp; <i class="bi bi-person-video2"></i> &nbsp; <span>Clients</span></div>
+      <hr>
+      <div class="nav-button" id="deconnexion-button">&nbsp; <i class="bi bi-box-arrow-left"></i> &nbsp; <span>Deconnexion</span></div>
+      <hr/>
+      <div class="nav-button" id="dashboard-button">&nbsp; <i class="bi bi-stopwatch"></i>&nbsp; <span>Express Reservation (A venir )</span></div>
+
+      <div id="nav-content-highlight"></div>
+    </div>
+    <input id="nav-footer-toggle" type="checkbox"/>
+    <div id="nav-footer">
+      <div id="nav-footer-heading">
+        <div id="nav-footer-avatar"><img src="https://gravatar.com/avatar/4474ca42d303761c2901fa819c4f2547"/></div>
+        <div id="nav-footer-titlebox"><a id="nav-footer-title" href="" target="_blank" style="font-size: small"></a><span id="nav-footer-subtitle">Manager</span></div>
+        <label for="nav-footer-toggle"><i class="fas fa-caret-up"></i></label>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('dashboard-button').addEventListener('click', function() {
+      window.location.href = '/quick-reservation';
+    });
+
+    document.getElementById('new-reservation-button').addEventListener('click', function() {
+      window.location.href = '/new-reservation';
+    });
+
+    document.getElementById('reservations-button').addEventListener('click', function() {
+      window.location.href = '/reservations';
+    });
+
+    document.getElementById('historique-button').addEventListener('click', function() {
+      window.location.href = '/historique';
+    });
+
+    document.getElementById('voitures-button').addEventListener('click', function() {
+      window.location.href = '/voitures';
+    });
+
+    document.getElementById('clients-button').addEventListener('click', function() {
+      window.location.href = '/clients';
+    });
+
+    document.getElementById('deconnexion-button').addEventListener('click', function() {
+      window.location.href = '/logout';
+    });
+
+  </script>
+  <script>
+    // Get the manager's name from local storage
+    var managerName = localStorage.getItem('manager_name');
+
+    // Get the span element where the manager's name will be displayed
+    var managerNameElement = document.querySelector('#nav-footer-titlebox a');
+
+    // Set the text content of the span element to the manager's name
+    managerNameElement.textContent = managerName;
+  </script>
   <div id="spinner" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);">Loading...</div>
     <div
       class="lg:grid grid-cols-2 m-12 px-8 py-10 gap-6 items-center bg-gray-50 border border-primary shadow-inner"
