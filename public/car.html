@@ -444,6 +444,7 @@
         data.manager_id = "manager0";
         data.prix = Number(price) * diffDays;
         console.log(data.prix);
+        data.manager_id=localStorage.getItem('manager_id');
 
         // Convert the data to JSON
         const jsonData = JSON.stringify(data);
@@ -463,7 +464,8 @@
                   console.log('Success:', data);
                   // Redirect to the /reservations page
                   window.location.href = "/reservations";
-                })                .catch(error => console.error('Error:', error));
+                })
+                .catch(error => console.error('Error:', error));
       });
       function updateTotalPrice() {
         const priceElement = document.getElementById('car-price');
