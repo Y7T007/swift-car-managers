@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clients Management</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css">
+    <link rel="stylesheet" href="../assets/css/clients.css">
+    <style>
+        .add-client-btn {
+            background-color: #1D4ED8;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .add-client-btn:hover {
+            background-color: #2563EB;
+        }
+
+        .client-card {
+            border: 1px solid #e5e7eb;
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.3s;
+        }
+
+        .client-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(180, 207, 245, 0.4);
+            padding-top: 60px;
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 500px;
+            border-radius: 10px;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        /* Sidebar styles */
+        .sidebar {
+            height: 100%;
+            width: 250px;
+            position: fixed;
+            z-index: 1000;
+            top: 0;
+            left: -250px;
+            background-color: white;
+            overflow-x: hidden;
+            transition: 0.3s;
+            padding-top: 20px;
+        }
+
+        .sidebar img {
+            display: block;
+            margin: 0 auto 20px;
+            width: 100px;
+        }
+
+        .sidebar a {
+            padding: 10px 15px;
+            text-decoration: none;
+            font-size: 18px;
+            color: #818181;
+            display: flex;
+            align-items: center;
+            transition: color 0.3s;
+        }
+
+        .sidebar a i {
+            margin-right: 10px;
+        }
+
+        .sidebar a:hover {
+            color: #f1f1f1;
+        }
+
+        .sidebar .closebtn {
+            position: absolute;
+            top: 0;
+            right: 25px;
+            font-size: 36px;
+            margin-left: 50px;
+        }
+
+        .sidebar .active {
+            background-color: #2563EB;
+            color: #fff;
+        }
+
+        #main {
+            transition: margin-left 0.3s;
+            padding: 16px;
+        }
+
+        .openbtn {
+            font-size: 20px;
+            cursor: pointer;
+            background-color: #1E3A8A;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            transition: background-color 0.3s;
+        }
+
+        .openbtn:hover {
+            background-color: #2563EB;
+        }
+
+        /* Dark mode styles */
+        .dark-mode {
+            background-color: #a39fb266;
+            color: white;
+        }
+
+        .dark-mode .client-card {
+            border-color: #838e9d89;
+            background-color: #838e9d89;
+        }
+
+        .dark-mode .add-client-btn {
+            background-color: #3B82F6;
+        }
+
+        .dark-mode .add-client-btn:hover {
+            background-color: #2563EB;
+        }
+
+        .dark-mode .sidebar {
+            background-color: #1f2937;
+        }
+
+        .dark-mode .sidebar a {
+            color: #a1a1aa;
+        }
+
+        .dark-mode .sidebar a:hover {
+            color: #f1f1f1;
+        }
+
+        .dark-mode .modal-content {
+            background-color: #1f2937;
+            color: white;
+        }
+
+        .dark-mode .close {
+            color: #fff;
+        }
+
+        .dark-mode .header {
+            background-color: #1f2937;
+        }
+
+        .dark-mode #themeToggle i {
+            color: #FBBF24;
+        }
+
+        .dark-mode input,
+        .dark-mode textarea,
+        .dark-mode select {
+            background-color: #1f2937;
+            color: white;
+        }
+
+        .header {
+            background-color: #fff;
+            top: 0;
+            left: 0;
+            right: 0;
+            position: fixed;
+            z-index: 50;
+        }
+
+        body {
+            margin-top: 80px;
+            /* Adjust this value to match the height of your header */
+        }
+
+        .intro-section {
+            background-color: #f1f5f9;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            margin-bottom: 20px;
+            color: #000;
+        }
+
+        .intro-section h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .intro-section p {
+            font-size: 1rem;
+            margin-bottom: 20px;
+        }
+
+        .dark-mode .intro-section {
+            background-color: #2d3748;
+            color: #f1f5f9;
+        }
+
+        /* Center table */
+        .panel {
+            max-width: 90%;
+            margin: 0 auto;
+        }
+
+        .panel-footer {
+            text-align: center;
+        }
+    </style>
+    <link rel="stylesheet" href="./assets/css/navbar.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+</head>
+
+<body class="bg-gray-100" id="body">
+<div id="nav-bar" style="z-index: 50">
+    <input id="nav-toggle" type="checkbox"/>
+    <div id="nav-header"><a id="nav-title" href="/dashboard" target="_blank">SwiftCar</a>
+        <label for="nav-toggle"><span id="nav-toggle-burger"></span></label>
+        <hr/>
+    </div>
+    <div id="nav-content">
+
+        <div style="background-color: #0ea5e9;color: black; border-radius: 15px;padding-left:10px;margin-right: 15px;" class="nav-button" id="new-reservation-button">&nbsp; <i class="bi bi-plus-square"></i> &nbsp; <span>New Reservation</span></div>
+        <div class="nav-button" id="dashboard-button">&nbsp; <i class="bi bi-stopwatch"></i>&nbsp; <span>Express Reservation</span></div>
+        <hr>
+        <div class="nav-button" id="reservations-button">&nbsp; <i class="bi bi-file-check"></i> &nbsp; <span>Reservations</span></div>
+        <div class="nav-button" id="historique-button">&nbsp; <i class="bi bi-clock-history"></i> &nbsp; <span>Historique</span></div>
+        <div class="nav-button" id="voitures-button">&nbsp; <i class="bi bi-car-front"></i> &nbsp; <span>Voitures</span></div>
+        <div class="nav-button" id="clients-button">&nbsp; <i class="bi bi-person-video2"></i> &nbsp; <span>Clients</span></div>
+        <hr>
+        <div class="nav-button" id="deconnexion-button">&nbsp; <i class="bi bi-box-arrow-left"></i> &nbsp; <span>Deconnexion</span></div>
+        <hr/>
+        <div id="nav-content-highlight"></div>
+    </div>
+    <input id="nav-footer-toggle" type="checkbox"/>
+    <div id="nav-footer">
+        <div id="nav-footer-heading">
+            <div id="nav-footer-avatar"><img src="https://gravatar.com/avatar/4474ca42d303761c2901fa819c4f2547"/></div>
+            <div id="nav-footer-titlebox"><a id="nav-footer-title" href="" target="_blank" style="font-size: small"></a><span id="nav-footer-subtitle">Manager</span></div>
+            <label for="nav-footer-toggle"><i class="fas fa-caret-up"></i></label>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.getElementById('dashboard-button').addEventListener('click', function() {
+        window.location.href = '/Dashboard';
+    });
+
+    document.getElementById('new-reservation-button').addEventListener('click', function() {
+        window.location.href = '/new-reservation';
+    });
+
+    document.getElementById('reservations-button').addEventListener('click', function() {
+        window.location.href = '/reservations';
+    });
+
+    document.getElementById('historique-button').addEventListener('click', function() {
+        window.location.href = '/historique';
+    });
+
+    document.getElementById('voitures-button').addEventListener('click', function() {
+        window.location.href = '/voitures';
+    });
+
+    document.getElementById('clients-button').addEventListener('click', function() {
+        window.location.href = '/clients';
+    });
+
+    document.getElementById('deconnexion-button').addEventListener('click', function() {
+        window.location.href = '/logout';
+    });
+
+</script>
+
+<script>
+    // Get the manager's name from local storage
+    var managerName = localStorage.getItem('manager_name');
+
+    // Get the span element where the manager's name will be displayed
+    var managerNameElement = document.querySelector('#nav-footer-titlebox a');
+
+    // Set the text content of the span element to the manager's name
+    managerNameElement.textContent = managerName;
+</script>
+
+
+    <!-- Container -->
+    <div id="main" class="container mx-auto p-6 ">
+        <!-- Intro Section -->
+        <div class="intro-section dark:bg-gray-800 dark:text-white">
+            <h2>Welcome to Your Clients Management Dashboard</h2>
+            <p>Click on the "New Client" button to add a new client to your list.</p>
+            <button class="add-client-btn" id="addClientBtn">New Client</button>
+        </div>
+
+        <!-- Clients Table -->
+        <div class="panel overflow-x-auto">
+            <div class="panel-heading flex flex-wrap justify-between items-center">
+                <h4 class="title">Clients <span>List</span></h4>
+                <input type="text" id="searchInput" onkeyup="searchTable()" placeholder="   Rechercher..." class="form-control" style="margin-right: 110px;">
+            </div>
+            <div class="panel-body table-responsive">
+                <table class="table w-full" style="width: 1100px;" id="clientsTable">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Name</th>
+                        <th>CIN</th>
+                        <th>Date of Birth</th>
+                        <th>Address</th>
+                        <th>Permis</th>
+                        <th>Contact Number</th>
+                        <th>Gender</th>
+                        <th>Fidelity Score</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
+            </div>
+            <div class="panel-footer">
+                <div class="row">
+                    <div class="col col-sm-6 col-xs-6">showing <b>5</b> out of <b>25</b> entries</div>
+                    <div class="col-sm-6 col-xs-6">
+                        <ul class="pagination hidden-xs pull-right">
+                            <li><a href="#"><</a></li>
+                            <li class="active"><a href="#">1</a></li>
+                            <li><a href="#">2</a></li>
+                            <li><a href="#">3</a></li>
+                            <li><a href="#">4</a></li>
+                            <li><a href="#">5</a></li>
+                            <li><a href="#">></a></li>
+                        </ul>
+                        <ul class="pagination visible-xs pull-right">
+                            <li><a href="#"><</a></li>
+                            <li><a href="#">></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Updating Client -->
+    <div id="updateClientModal" class="modal">
+        <div class="modal-content dark:bg-gray-800 dark:text-white">
+            <span class="close">&times;</span>
+            <h2 class="text-xl font-semibold mb-4">Update Client</h2>
+            <form id="updateClientForm">
+                <!-- The same form fields as the "Add Client" form go here -->
+                <input type="hidden" id="id2" name="id">
+                <div class="mb-4">
+                    <label for="name" class="block text-gray-700 dark:text-gray-300">ID</label>
+                    <input type="text" id="_id" name="_id" class="w-full px-3 py-2 border rounded dark:bg-gray-700 dark:text-white" value="" disabled>
+                </div><div class="mb-4">
+                    <label for="name" class="block text-gray-700 dark:text-gray-300">Nom Complet</label>
+                    <input type="text" id="name" name="name" class="w-full px-3 py-2 border rounded dark:bg-gray-700 dark:text-white" required>
+                </div>
+                <div class="mb-4">
+                    <label for="address" class="block text-gray-700 dark:text-gray-300">Adresse</label>
+                    <input type="text" id="address" name="address" class="w-full px-3 py-2 border rounded dark:bg-gray-700 dark:text-white" required>
+                </div>
+                <div class="mb-4">
+                    <label for="cin" class="block text-gray-700 dark:text-gray-300">CIN</label>
+                    <input type="text" id="cin" name="cin" class="w-full px-3 py-2 border rounded dark:bg-gray-700 dark:text-white" required>
+                </div>
+                <div class="mb-4">
+                    <label for="date_of_birth" class="block text-gray-700 dark:text-gray-300">Date de Naissance</label>
+                    <input type="date" id="date_of_birth" name="date_of_birth" class="w-full px-3 py-2 border rounded dark:bg-gray-700 dark:text-white" required>
+                </div>
+                <div class="mb-4">
+                    <label for="permis_conductor" class="block text-gray-700 dark:text-gray-300">Permis</label>
+                    <input type="text" id="permis_conductor" name="permis_conductor" class="w-full px-3 py-2 border rounded dark:bg-gray-700 dark:text-white" required>
+                </div>
+                <div class="mb-4">
+                    <label for="contact_number" class="block text-gray-700 dark:text-gray-300">Téléphone</label>
+                    <input type="text" id="contact_number" name="contact_number" class="w-full px-3 py-2 border rounded dark:bg-gray-700 dark:text-white" required>
+                </div>
+                <div class="mb-4">
+                    <label for="gender" class="block text-gray-700 dark:text-gray-300">Gender</label>
+                    <select id="gender" name="gender" class="w-full px-3 py-2 border rounded dark:bg-gray-700 dark:text-white" required>
+                        <option value="M">Male</option>
+                        <option value="F">Female</option>
+                    </select>
+                </div>
+                <div class="mb-4">
+                    <label for="fidelity_score" class="block text-gray-700 dark:text-gray-300">Fidelity Score</label>
+                    <input type="number" id="fidelity_score" name="fidelity_score" class="w-full px-3 py-2 border rounded dark:bg-gray-700 dark:text-white" required>
+                </div>
+                <button type="submit" class="add-client-btn">Update Client</button>
+                <!-- Make sure to add an input field for the _id -->
+                <input type="hidden" id="update_id" name="_id">
+                <!-- Rest of the form fields -->
+            </form>
+        </div>
+    </div>
+    <!-- Modal for Adding Client -->
+<div id="addClientModal" class="modal">
+    <div class="modal-content dark:bg-gray-800 dark:text-white">
+        <span class="close">&times;</span>
+        <h2 class="text-xl font-semibold mb-4">Add New Client</h2>
+        <form id="addClientForm">
+            <div class="mb-4">
+                <label for="name" class="block text-gray-700 dark:text-gray-300">Nom Complet</label>
+                <input type="text" id="name" name="name" class="w-full px-3 py-2 border rounded dark:bg-gray-700 dark:text-white" required>
+            </div>
+            <div class="mb-4">
+                <label for="address" class="block text-gray-700 dark:text-gray-300">Adresse</label>
+                <input type="text" id="address" name="address" class="w-full px-3 py-2 border rounded dark:bg-gray-700 dark:text-white" required>
+            </div>
+            <div class="mb-4">
+                <label for="cin" class="block text-gray-700 dark:text-gray-300">CIN</label>
+                <input type="text" id="cin" name="cin" class="w-full px-3 py-2 border rounded dark:bg-gray-700 dark:text-white" required>
+            </div>
+            <div class="mb-4">
+                <label for="date_of_birth" class="block text-gray-700 dark:text-gray-300">Date de Naissance</label>
+                <input type="date" id="date_of_birth" name="date_of_birth" class="w-full px-3 py-2 border rounded dark:bg-gray-700 dark:text-white" required>
+            </div>
+            <div class="mb-4">
+                <label for="permis_conductor" class="block text-gray-700 dark:text-gray-300">Permis</label>
+                <input type="text" id="permis_conductor" name="permis_conductor" class="w-full px-3 py-2 border rounded dark:bg-gray-700 dark:text-white" required>
+            </div>
+            <div class="mb-4">
+                <label for="contact_number" class="block text-gray-700 dark:text-gray-300">Téléphone</label>
+                <input type="text" id="contact_number" name="contact_number" class="w-full px-3 py-2 border rounded dark:bg-gray-700 dark:text-white" required>
+            </div>
+            <div class="mb-4">
+                <label for="gender" class="block text-gray-700 dark:text-gray-300">Gender</label>
+                <select id="gender" name="gender" class="w-full px-3 py-2 border rounded dark:bg-gray-700 dark:text-white" required>
+                    <option value="M">Male</option>
+                    <option value="F">Female</option>
+                </select>
+            </div>
+            <div class="mb-4">
+                <label for="fidelity_score" class="block text-gray-700 dark:text-gray-300">Fidelity Score</label>
+                <input type="number" id="fidelity_score" name="fidelity_score" class="w-full px-3 py-2 border rounded dark:bg-gray-700 dark:text-white" required>
+            </div>
+            <button type="submit" class="add-client-btn">Add Client</button>
+        </form>
+    </div>
+</div>
+
+<!--    To fetch the clients from the server -->
+    <script>
+        // Get modal elements
+        var addClientModal = document.getElementById("addClientModal");
+        var updateClientModal = document.getElementById("updateClientModal");
+
+        // Get open modal button
+        var addClientBtn = document.getElementById("addClientBtn");
+
+        // Get close buttons
+        var closeButtons = document.getElementsByClassName("close");
+
+        // Open add client modal
+        addClientBtn.onclick = function () {
+            addClientModal.style.display = "block";
+        }
+
+        // Close modals
+        for (var i = 0; i < closeButtons.length; i++) {
+            closeButtons[i].onclick = function () {
+                if (addClientModal.style.display === "block") {
+                    addClientModal.style.display = "none";
+                }
+                if (updateClientModal.style.display === "block") {
+                    updateClientModal.style.display = "none";
+                }
+            }
+        }
+
+        // Close modals if outside click
+        window.onclick = function (event) {
+            if (event.target == addClientModal) {
+                addClientModal.style.display = "none";
+            }
+            if (event.target == updateClientModal) {
+                updateClientModal.style.display = "none";
+            }
+        }
+
+        // Fetch data from the API
+        fetch('https://swift-car-django-server-4c51acec5937.herokuapp.com/clients/view-all')
+            .then(response => response.json())
+            .then(data => {
+                // Get the table body
+                let tableBody = document.querySelector('#clientsTable tbody');
+
+                // Loop through the data
+                data.forEach((client, index) => {
+                    // Create a new row
+                    let row = document.createElement('tr');
+
+                    // Add cells to the row
+                    row.innerHTML = `
+        <td>${client._id }</td>
+        <td>${client.name}</td>
+        <td>${client.cin}</td>
+        <td>${client.date_of_birth}</td>
+        <td>${client.address}</td>
+        <td>${client.permis_conductor}</td>
+        <td>${client.contact_number}</td>
+        <td>${client.gender}</td>
+        <td>${client.fidelity_score}</td>
+        <td>
+            <ul class="action-list">
+                <li><button class="fa fa-edit" data-tip="edit" data-id="${client._id }"><i ></i></button></li>
+                <li><a href="https://swift-car-django-server-4c51acec5937.herokuapp.com/clients/remove/${client._id}" data-tip="delete"><i class="fa fa-trash"></i></a></li>
+            </ul>
+        </td>
+    `;
+
+                    // Append the row to the table body
+                    tableBody.appendChild(row);
+
+                    // Add event listener to the edit button
+                    row.querySelector('button[data-tip="edit"]').addEventListener('click', function(event) {
+                        event.preventDefault();
+
+                        // Get the client data
+                        let client = data.find(client => client._id === this.dataset.id);
+
+                        // Pre-fill the form with the existing data
+                        document.getElementById('_id').value = client._id;
+                        document.getElementById('id2').value = client._id;
+                        document.getElementById('name').value = client.name;
+                        document.getElementById('address').value = client.address;
+                        document.getElementById('cin').value = client.cin;
+                        document.getElementById('date_of_birth').value = client.date_of_birth;
+                        document.getElementById('permis_conductor').value = client.permis_conductor;
+                        document.getElementById('contact_number').value = client.contact_number;
+                        document.getElementById('gender').value = client.gender;
+                        document.getElementById('fidelity_score').value = client.fidelity_score;
+
+                        // Show the update modal
+                        updateClientModal.style.display = "block";
+                    });
+                });
+            })
+            .catch(error => console.error('Error:', error));
+    </script>
+
+<!--    Add client Model triggers  -->
+    <script>
+        // Get modal element
+        var modal = document.getElementById("addClientModal");
+        // Get open modal button
+        var btn = document.getElementById("addClientBtn");
+        // Get close button
+        var span = document.getElementsByClassName("close")[0];
+        // Open modal
+        btn.onclick = function () {
+            modal.style.display = "block";
+        }
+        // Close modal
+        span.onclick = function () {
+            modal.style.display = "none";
+        }
+        // Close modal if outside click
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+
+        // Theme toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const body = document.getElementById('body');
+        themeToggle.addEventListener('click', () => {
+            body.classList.toggle('dark-mode');
+            if (body.classList.contains('dark-mode')) {
+                themeToggle.innerHTML = '<i class="fas fa-moon text-xl"></i>';
+            } else {
+                themeToggle.innerHTML = '<i class="fas fa-sun text-xl"></i>';
+            }
+        });
+
+        // Sidebar functions
+        const sidebarToggle = document.getElementById('sidebarToggle');
+        const sidebar = document.getElementById('mySidebar');
+        const main = document.getElementById('main');
+        const header = document.querySelector('.header');
+
+        sidebarToggle.addEventListener('click', () => {
+            if (sidebar.style.left === '0px') {
+                closeNav();
+            } else {
+                openNav();
+            }
+        });
+
+        function openNav() {
+            sidebar.style.left = "0";
+            main.style.marginLeft = "250px";
+            header.style.marginLeft = '250px';
+        }
+
+        function closeNav() {
+            sidebar.style.left = "-250px";
+            main.style.marginLeft = "0";
+            header.style.marginLeft = '0';
+        }
+
+        // Search function
+        function searchTable() {
+            var input, filter, table, tr, td, i, j, txtValue;
+            input = document.getElementById("searchInput");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("clientsTable");
+            tr = table.getElementsByTagName("tr");
+            for (i = 1; i < tr.length; i++) {
+                tr[i].style.display = "none";
+                td = tr[i].getElementsByTagName("td");
+                for (j = 0; j < td.length; j++) {
+                    if (td[j]) {
+                        txtValue = td[j].textContent || td[j].innerText;
+                        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                            tr[i].style.display = "";
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+
+<!--    Add client form submit  -->
+    <script>
+        // Select the form
+        const form = document.getElementById('addClientForm');
+
+        // Listen for the submit event
+        form.addEventListener('submit', function(event) {
+            // Prevent the default form submission behavior
+            event.preventDefault();
+
+            // Create a new FormData object from the form
+            let formData = new FormData(form);
+
+            // Convert the FormData object to a JSON object
+            let jsonObject = {};
+            for (const [key, value]  of formData.entries()) {
+                jsonObject[key] = value;
+            }
+
+            // Send the JSON object to the server using the Fetch API
+            fetch('https://swift-car-django-server-4c51acec5937.herokuapp.com/clients/add', {
+                method: 'POST',
+
+                body: JSON.stringify(jsonObject)
+            })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Success:', data);
+                    // You can add code here to handle the response, like updating the UI or showing a success message
+                    location.reload();
+
+                })
+                .catch((error) => {
+                    console.log(JSON.stringify(jsonObject))
+                    console.error('Error:', error);
+                    // You can add code here to handle errors, like showing an error message
+                });
+        });
+    </script>
+
+
+<!-- Edit Client Model  listener  and form submitter-->
+    <script>
+        // Select the form
+        const updateForm = document.getElementById('updateClientForm');
+
+        // Listen for the submit event
+        updateForm.addEventListener('submit', function(event) {
+            // Prevent the default form submission behavior
+            event.preventDefault();
+
+            // Create a new FormData object from the form
+            let formData = new FormData(updateForm);
+
+            // Convert the FormData object to a JSON object
+            let jsonObject = {};
+            for (const [key, value]  of formData.entries()) {
+                console.log(key, value)
+                jsonObject[key] = value;
+            }
+
+            let id = jsonObject.id;
+            'id' in jsonObject && delete jsonObject.id;
+            '_id' in jsonObject && delete jsonObject._id;
+
+
+            // Send the JSON object to the server using the Fetch API
+            fetch(`https://swift-car-django-server-4c51acec5937.herokuapp.com/clients/update/${id}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(jsonObject)
+            })
+                .then(response => response.json())
+                .then(data => {
+                    console.log(JSON.stringify(jsonObject))
+                    console.log('Success:', data);
+                    location.reload();
+
+                    // You can add code here to handle the response, like updating the UI or showing a success message
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                    // You can add code here to handle errors, like showing an error message
+                });
+        });
+    </script>
+</body>
+
+</html>

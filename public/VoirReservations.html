@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reservations Management</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css">
+    
+    <link rel="stylesheet" href="{% static 'css/clients.css' %}">
+    <link rel="stylesheet" href="clients.css">
+    <style>
+         .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        /* Sidebar styles */
+        .sidebar {
+            height: 100%;
+            width: 250px;
+            position: fixed;
+            z-index: 1000;
+            top: 0;
+            left: -250px;
+            background-color: white;
+            overflow-x: hidden;
+            transition: 0.3s;
+            padding-top: 20px;
+        }
+
+        .sidebar img {
+            display: block;
+            margin: 0 auto 20px;
+            width: 100px;
+        }
+
+        .sidebar a {
+            padding: 10px 15px;
+            text-decoration: none;
+            font-size: 18px;
+            color: #818181;
+            display: flex;
+            align-items: center;
+            transition: color 0.3s;
+        }
+
+        .sidebar a i {
+            margin-right: 10px;
+        }
+
+        .sidebar a:hover {
+            color: #f1f1f1;
+        }
+
+        .sidebar .closebtn {
+            position: absolute;
+            top: 0;
+            right: 25px;
+            font-size: 36px;
+            margin-left: 50px;
+        }
+
+        .sidebar .active {
+            background-color: #2563EB;
+            color: #fff;
+        }
+
+        #main {
+            transition: margin-left 0.3s;
+            padding: 16px;
+        }
+
+        .openbtn {
+            font-size: 20px;
+            cursor: pointer;
+            background-color: #1E3A8A;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            transition: background-color 0.3s;
+        }
+
+        .openbtn:hover {
+            background-color: #2563EB;
+        }
+
+        /* Dark mode styles */
+        .dark-mode {
+            background-color: #a39fb266;
+            color: white;
+        }
+
+        .action-btn {
+            background-color: #1D4ED8;
+            color: #fff;
+            padding: 5px 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+            margin: 2px;
+        }
+
+        .action-btn:hover {
+            background-color: #2563EB;
+        }
+
+        .reservation-card {
+            border: 1px solid #e5e7eb;
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.3s;
+        }
+
+        .reservation-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(180, 207, 245, 0.4);
+            padding-top: 60px;
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 500px;
+            border-radius: 10px;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .dark-mode {
+            background-color: #a39fb266;
+            color: white;
+        }
+
+        .dark-mode .reservation-card {
+            border-color: #838e9d89;
+            background-color: #838e9d89;
+        }
+
+        .dark-mode .action-btn {
+            background-color: #3B82F6;
+        }
+
+        .dark-mode .action-btn:hover {
+            background-color: #2563EB;
+        }
+
+        .dark-mode .modal-content {
+            background-color: #1f2937;
+            color: white;
+        }
+
+        .dark-mode .close {
+            color: #fff;
+        }
+
+        .header {
+            background-color: #fff;
+            top: 0;
+            left: 0;
+            right: 0;
+            position: fixed;
+            z-index: 50;
+        }
+
+        body {
+            margin-top: 80px;
+        }
+
+        .intro-section {
+            background-color: #f1f5f9;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            margin-bottom: 20px;
+            color: #000;
+        }
+
+        .dark-mode .intro-section {
+            background-color: #2d3748;
+            color: #f1f5f9;
+        }
+
+        .panel {
+            max-width: 90%;
+            margin: 0 auto;
+        }
+
+        .panel-footer {
+            text-align: center;
+        }
+    </style>
+    <link rel="stylesheet" href="./assets/css/navbar.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+</head>
+
+<body class="bg-gray-100" id="body">
+<div id="nav-bar" style="z-index: 50">
+    <input id="nav-toggle" type="checkbox"/>
+    <div id="nav-header"><a id="nav-title" href="/dashboard" target="_blank">SwiftCar</a>
+        <label for="nav-toggle"><span id="nav-toggle-burger"></span></label>
+        <hr/>
+    </div>
+    <div id="nav-content">
+
+        <div style="background-color: #0ea5e9;color: black; border-radius: 15px;padding-left:10px;margin-right: 15px;" class="nav-button" id="new-reservation-button">&nbsp; <i class="bi bi-plus-square"></i> &nbsp; <span>New Reservation</span></div>
+        <div class="nav-button" id="dashboard-button">&nbsp; <i class="bi bi-stopwatch"></i>&nbsp; <span>Express Reservation</span></div>
+        <hr>
+        <div class="nav-button" id="reservations-button">&nbsp; <i class="bi bi-file-check"></i> &nbsp; <span>Reservations</span></div>
+        <div class="nav-button" id="historique-button">&nbsp; <i class="bi bi-clock-history"></i> &nbsp; <span>Historique</span></div>
+        <div class="nav-button" id="voitures-button">&nbsp; <i class="bi bi-car-front"></i> &nbsp; <span>Voitures</span></div>
+        <div class="nav-button" id="clients-button">&nbsp; <i class="bi bi-person-video2"></i> &nbsp; <span>Clients</span></div>
+        <hr>
+        <div class="nav-button" id="deconnexion-button">&nbsp; <i class="bi bi-box-arrow-left"></i> &nbsp; <span>Deconnexion</span></div>
+        <hr/>
+        <div id="nav-content-highlight"></div>
+    </div>
+    <input id="nav-footer-toggle" type="checkbox"/>
+    <div id="nav-footer">
+        <div id="nav-footer-heading">
+            <div id="nav-footer-avatar"><img src="https://gravatar.com/avatar/4474ca42d303761c2901fa819c4f2547"/></div>
+            <div id="nav-footer-titlebox"><a id="nav-footer-title" href="" target="_blank" style="font-size: small"></a><span id="nav-footer-subtitle">Manager</span></div>
+            <label for="nav-footer-toggle"><i class="fas fa-caret-up"></i></label>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.getElementById('dashboard-button').addEventListener('click', function() {
+        window.location.href = '/Dashboard';
+    });
+
+    document.getElementById('new-reservation-button').addEventListener('click', function() {
+        window.location.href = '/new-reservation';
+    });
+
+    document.getElementById('reservations-button').addEventListener('click', function() {
+        window.location.href = '/reservations';
+    });
+
+    document.getElementById('historique-button').addEventListener('click', function() {
+        window.location.href = '/historique';
+    });
+
+    document.getElementById('voitures-button').addEventListener('click', function() {
+        window.location.href = '/voitures';
+    });
+
+    document.getElementById('clients-button').addEventListener('click', function() {
+        window.location.href = '/clients';
+    });
+
+    document.getElementById('deconnexion-button').addEventListener('click', function() {
+        window.location.href = '/logout';
+    });
+
+</script>
+
+<script>
+    // Get the manager's name from local storage
+    var managerName = localStorage.getItem('manager_name');
+
+    // Get the span element where the manager's name will be displayed
+    var managerNameElement = document.querySelector('#nav-footer-titlebox a');
+
+    // Set the text content of the span element to the manager's name
+    managerNameElement.textContent = managerName;
+</script>
+
+    <!-- Container -->
+    <div id="main" class="container mx-auto p-6 mt-24">
+        <!-- Intro Section -->
+        <div class="intro-section dark:bg-gray-800 dark:text-white">
+            <h2>Reservations by Manager</h2>
+            <p>List of reservations managed by the selected manager.</p>
+        </div>
+
+        <!-- Reservations Table -->
+        <div class="panel overflow-x-auto">
+            <div class="panel-heading flex flex-wrap justify-between items-center">
+                <h4 class="title">Reservations <span>List</span></h4>
+                <input type="text" id="searchInput" onkeyup="searchTable()" placeholder="   Rechercher..."
+                    class="form-control" style="margin-right: 110px;">
+            </div>
+            <div class="panel-body table-responsive">
+                <table class="table w-full" style="width: 1100px;" id="reservationsTable">
+                    <thead>
+                        <tr>
+                            <th>id reservation</th>
+                            <th>Client</th>
+                            <th>Date Reservation</th>
+                            <th>Date Debut</th>
+                            <th>Date Fin</th>
+                            <th>Voiture ID</th>
+                            <th>Statut</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+            <div class="panel-footer">
+                <div class="row">
+                    <div class="col col-sm-6 col-xs-6">showing <b>5</b> out of <b>25</b> entries</div>
+                    <div class="col-sm-6 col-xs-6">
+                        <ul class="pagination hidden-xs pull-right">
+                            <li><a href="#">
+                                    << /a>
+                            </li>
+                            <li class="active"><a href="#">1</a></li>
+                            <li><a href="#">2</a></li>
+                            <li><a href="#">3</a></li>
+                            <li><a href="#">4</a></li>
+                            <li><a href="#">5</a></li>
+                            <li><a href="#">></a></li>
+                        </ul>
+                        <ul class="pagination visible-xs pull-right">
+                            <li><a href="#">
+                                    << /a>
+                            </li>
+                            <li><a href="#">></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Fetch data from the API
+        fetch('https://swift-car-django-server-4c51acec5937.herokuapp.com/reservations/view-all')
+            .then(response => response.json())
+            .then(data => {
+                // Get the table body
+                let tableBody = document.querySelector('#reservationsTable tbody');
+
+                // Loop through the data
+                data.forEach((reservation, index) => {
+                    // Create a new row
+                    let row = document.createElement('tr');
+
+                    // Add cells to the row
+                    row.innerHTML = `
+        <td>${reservation._id}</td>
+        <td>${reservation.client}</td>
+        <td>${reservation.date_reservation}</td>
+        <td>${reservation.date_debut}</td>
+        <td>${reservation.date_fin}</td>
+        <td>${reservation.voiture}</td>
+        <td>${reservation.status}</td>
+        <td>
+            <a class="action-btn" href="#" style="background-color:green;" onclick="handleAccept('${reservation._id}')">Accepter</a>
+<a class="action-btn" href="#" style="background-color:red;" onclick="handleRefuse('${reservation._id}')">Refuser</a>
+        </td>
+    `;
+
+                    // Append the row to the table body
+                    tableBody.appendChild(row);
+                });
+            })
+            .catch(error => console.error('Error:', error));
+
+
+
+        // Theme toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const body = document.getElementById('body');
+        themeToggle.addEventListener('click', () => {
+            body.classList.toggle('dark-mode');
+            if (body.classList.contains('dark-mode')) {
+                themeToggle.innerHTML = '<i class="fas fa-moon text-xl"></i>';
+            } else {
+                themeToggle.innerHTML = '<i class="fas fa-sun text-xl"></i>';
+            }
+        });
+
+        // Sidebar functions
+        const sidebarToggle = document.getElementById('sidebarToggle');
+        const sidebar = document.getElementById('mySidebar');
+        const main = document.getElementById('main');
+        const header = document.querySelector('.header');
+
+        sidebarToggle.addEventListener('click', () => {
+            if (sidebar.style.left === '0px') {
+                closeNav();
+            } else {
+                openNav();
+            }
+        });
+
+        function openNav() {
+            sidebar.style.left = "0";
+            main.style.marginLeft = "250px";
+            header.style.marginLeft = '250px';
+        }
+
+        function closeNav() {
+            sidebar.style.left = "-250px";
+            main.style.marginLeft = "0";
+            header.style.marginLeft = '0';
+        }
+
+        // Search function
+        function searchTable() {
+            var input, filter, table, tr, td, i, j, txtValue;
+            input = document.getElementById("searchInput");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("clientsTable");
+            tr = table.getElementsByTagName("tr");
+            for (i = 1; i < tr.length; i++) {
+                tr[i].style.display = "none";
+                td = tr[i].getElementsByTagName("td");
+                for (j = 0; j < td.length; j++) {
+                    if (td[j]) {
+                        txtValue = td[j].textContent || td[j].innerText;
+                        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                            tr[i].style.display = "";
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+
+    </script>
+
+
+<script>
+    function handleAccept(reservationId) {
+        const url = `https://swift-car-django-server-4c51acec5937.herokuapp.com/reservations/accepter/${reservationId}`;
+        
+        fetch(url, {
+            method: 'GET'
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data); // Print the data to the console
+            location.reload(); // Refresh the page
+        })
+        .catch(error => console.error('Error:', error));
+    }
+    
+    function handleRefuse(reservationId) {
+        const url = `https://swift-car-django-server-4c51acec5937.herokuapp.com/reservations/refuser/${reservationId}`;
+        
+        fetch(url, {
+            method: 'GET'
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data); // Print the data to the console
+            location.reload(); // Refresh the page
+        })
+        .catch(error => console.error('Error:', error));
+    }
+    </script>
+
+
+</body>
+
+</html>

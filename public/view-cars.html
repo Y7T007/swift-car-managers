@@ -1,0 +1,220 @@
+
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Cars</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+          rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap"
+          rel="stylesheet" />
+    <script src="https://kit.fontawesome.com/47cb46ef94.js"
+            crossorigin="anonymous"></script>
+            <!--  -->
+
+            <link rel="stylesheet" href="./tailwind.css">
+            <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+      #spinner {
+        border: 16px solid #f3f3f3;
+        border-top: 16px solid #3498db;
+        border-radius: 50%;
+        width: 120px;
+        height: 120px;
+        animation: spin 2s linear infinite;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+    </style>
+
+
+  <link rel="stylesheet" href="./assets/css/navbar.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+</head>
+
+<div id="nav-bar" style="z-index: 50">
+  <input id="nav-toggle" type="checkbox"/>
+  <div id="nav-header"><a id="nav-title" href="/dashboard" target="_blank">SwiftCar</a>
+    <label for="nav-toggle"><span id="nav-toggle-burger"></span></label>
+    <hr/>
+  </div>
+  <div id="nav-content">
+
+    <div style="background-color: #0ea5e9;color: black; border-radius: 15px;padding-left:10px;margin-right: 15px;" class="nav-button" id="new-reservation-button">&nbsp; <i class="bi bi-plus-square"></i> &nbsp; <span>New Reservation</span></div>
+    <div class="nav-button" id="dashboard-button">&nbsp; <i class="bi bi-stopwatch"></i>&nbsp; <span>Express Reservation</span></div>
+    <hr>
+    <div class="nav-button" id="reservations-button">&nbsp; <i class="bi bi-file-check"></i> &nbsp; <span>Reservations</span></div>
+    <div class="nav-button" id="historique-button">&nbsp; <i class="bi bi-clock-history"></i> &nbsp; <span>Historique</span></div>
+    <div class="nav-button" id="voitures-button">&nbsp; <i class="bi bi-car-front"></i> &nbsp; <span>Voitures</span></div>
+    <div class="nav-button" id="clients-button">&nbsp; <i class="bi bi-person-video2"></i> &nbsp; <span>Clients</span></div>
+    <hr>
+    <div class="nav-button" id="deconnexion-button">&nbsp; <i class="bi bi-box-arrow-left"></i> &nbsp; <span>Deconnexion</span></div>
+    <hr/>
+    <div id="nav-content-highlight"></div>
+  </div>
+  <input id="nav-footer-toggle" type="checkbox"/>
+  <div id="nav-footer">
+    <div id="nav-footer-heading">
+      <div id="nav-footer-avatar"><img src="https://gravatar.com/avatar/4474ca42d303761c2901fa819c4f2547"/></div>
+      <div id="nav-footer-titlebox"><a id="nav-footer-title" href="" target="_blank" style="font-size: small"></a><span id="nav-footer-subtitle">Manager</span></div>
+      <label for="nav-footer-toggle"><i class="fas fa-caret-up"></i></label>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.getElementById('dashboard-button').addEventListener('click', function() {
+    window.location.href = '/Dashboard';
+  });
+
+  document.getElementById('new-reservation-button').addEventListener('click', function() {
+    window.location.href = '/new-reservation';
+  });
+
+  document.getElementById('reservations-button').addEventListener('click', function() {
+    window.location.href = '/reservations';
+  });
+
+  document.getElementById('historique-button').addEventListener('click', function() {
+    window.location.href = '/historique';
+  });
+
+  document.getElementById('voitures-button').addEventListener('click', function() {
+    window.location.href = '/voitures';
+  });
+
+  document.getElementById('clients-button').addEventListener('click', function() {
+    window.location.href = '/clients';
+  });
+
+  document.getElementById('deconnexion-button').addEventListener('click', function() {
+    window.location.href = '/logout';
+  });
+
+</script>
+
+<script>
+  // Get the manager's name from local storage
+  var managerName = localStorage.getItem('manager_name');
+
+  // Get the span element where the manager's name will be displayed
+  var managerNameElement = document.querySelector('#nav-footer-titlebox a');
+
+  // Set the text content of the span element to the manager's name
+  managerNameElement.textContent = managerName;
+</script>
+
+
+<div class="p-8">
+    <div class="lg:grid grid-cols-4 mt-8">
+      <div>
+        <div class="mr-6">
+<!--          <h2 class="font-bold mb-3 text-lg text-primary ">Categories</h2>-->
+<!--          <a href="/cars/view-all"-->
+<!--             class="flex gap-3 p-3 font-medium items-center border rounded-xl mb-3 cursor-pointer hover:bg-primary hover:bg-opacity-10 hover:text-primary hover:shadow-md hover:border-primary transition-all ease-in-out">-->
+<!--            <img src="" alt="image" width="30" height="30" />-->
+<!--            <h2>Tous</h2>-->
+<!--          </a>-->
+<!--          <a href="/cars/view-luxe"-->
+<!--             class="flex gap-3 p-3 font-medium items-center border rounded-xl mb-3 cursor-pointer hover:bg-primary hover:bg-opacity-10 hover:text-primary hover:shadow-md hover:border-primary transition-all ease-in-out">-->
+<!--            <img src="" alt="image" width="30" height="30" />-->
+<!--            <h2>Luxe</h2>-->
+<!--          </a>-->
+<!--          <a href="/cars/view-familial"-->
+<!--             class="flex gap-3 p-3 font-medium items-center border rounded-xl mb-3 cursor-pointer hover:bg-primary hover:bg-opacity-10 hover:text-primary hover:shadow-md hover:border-primary transition-all ease-in-out">-->
+<!--            <img src="" alt="image" width="30" height="30" />-->
+<!--            <h2>Familial</h2>-->
+<!--          </a>-->
+<!--          <a href="/cars/view-offroad"-->
+<!--             class="flex gap-3 p-3 font-medium items-center border rounded-xl mb-3 cursor-pointer hover:bg-primary hover:bg-opacity-10 hover:text-primary hover:shadow-md hover:border-primary transition-all ease-in-out">-->
+<!--            <img src="" alt="image" width="30" height="30" />-->
+<!--            <h2>Offroad</h2>-->
+<!--          </a>-->
+        </div>
+      </div>
+      <div class="col-span-3">
+        <h2 class="font-bold text-[22px]">{{ cars_type | title }}</h2>
+        <div class="grid grid-cols-2 lg:grid-cols-3 gap-6 mt-5">
+
+        </div>
+      </div>
+    </div>
+  </div>
+<div id="spinner" style="display: none;"></div>
+
+<script>
+  // Fetch data from the server
+  fetch('https://swift-car-django-server-4c51acec5937.herokuapp.com/cars/view-all')
+          .then(response => {
+            // Hide the spinner
+            document.getElementById('spinner').style.display = 'none';
+            return response.json();
+          })          .then(data => {
+            // Get the parent container
+            const container = document.querySelector('.grid-cols-2');
+
+            // Iterate over the data array
+            data.forEach(car => {
+              // Create a new car card
+              const carCard = document.createElement('a');
+              carCard.className = 'shadow-md rounded-xl hover:shadow-lg hover:shadow-primary cursor-pointer hover:scale-105 transition-all ease-in-out flex flex-col justify-between bg-primary bg-opacity-[0.04] border group';
+              carCard.href = `/voiture?idcar=${car._id }`;
+
+              // Fill the car card with data
+              carCard.innerHTML = `
+        <img src="${car.image}" alt="" width="500" height="200" class='h-[150px] md:h-[100px] object-cover rounded-xl' />
+        <div class="flex flex-col items-start px-5">
+          <div class="flex self-stretch justify-between mt-5">
+            <h2 class="font-bold text-lg">${car.marque}</h2>
+            <h2 class="p-1 text-primary font-bold bg-primary bg-opacity-15  rounded-full px-2 text-[12px]">${car.famille}</h2>
+          </div>
+          <div class="grid grid-cols-2 gap-x-6 gap-y-2 items-baseline my-4 self-center">
+            <div class="flex gap-2 text-lg items-center font-semibold">
+              <i class="fa-solid fa-users text-primary"></i>
+              <h2 class="text-gray-500">${car.capacite_sieges} pers</h2>
+            </div>
+            <div class="flex gap-2 text-lg items-center font-semibold">
+              <i class="fa-solid fa-droplet text-primary"></i>
+              <h2 class="text-gray-500">${car.couleur}</h2>
+            </div>
+            <div class="flex gap-2 text-lg items-center font-semibold">
+              <i class="fa-solid fa-gauge text-primary"></i>
+              <h2 class="text-gray-500">${car.kilometrage} km</h2>
+            </div>
+            <div class="flex gap-2 text-lg items-center font-semibold">
+              <i class="fa-solid fa-gas-pump text-primary"></i>
+              <h2 class="text-gray-500">${car.transmission}</h2>
+            </div>
+          </div>
+          <h2 class="font-bold text-[#ffbf00] color text-[35px] self-center mb-4">
+            $${car.prix_par_jour} <span class="text-[22px] text-gray-600">/ jours</span>
+          </h2>
+        </div>
+        <h2 class="self-stretch bg-primary text-white p-2 rounded-b group-hover:scale-[1.02] group-hover:translate-y-[-8px] group-hover:rounded-none group-hover:shadow-[0_2px_4px_#000] transition ease-in-out font-bold text-center text-[18px]">
+          Réserver
+        </h2>
+      `;
+
+              // Append the new car card to the parent container
+              container.appendChild(carCard);
+            });
+          })
+          .catch(error => {
+            // Hide the spinner
+            document.getElementById('spinner').style.display = 'none';
+            console.error('Error:', error);
+          });
+
+</script>

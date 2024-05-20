@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reservations Status</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+    <style>
+        .section {
+            margin-bottom: 20px;
+            padding: 20px;
+            border-radius: 10px;
+            background-color: #ffffff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .dark-mode .section {
+            background-color: #1f2937;
+            color: #ffffff;
+        }
+
+        .in-progress {
+            background-color: #d1fae5;
+        }
+
+        .upcoming {
+            background-color: #bfdbfe;
+        }
+
+        .past {
+            background-color: #fee2e2;
+        }
+
+        .dark-mode .in-progress {
+            background-color: #064e3b;
+            color: #fff;
+        }
+
+        .dark-mode .upcoming {
+            background-color: #1e40af;
+            color: #fff;
+        }
+
+        .dark-mode .past {
+            background-color: #7f1d1d;
+            color: #fff;
+        }
+
+        .accepted {
+            background-color: #22c55e;
+            color: white;
+        }
+
+        .declined {
+            background-color: #f87171;
+            color: white;
+        }
+
+        .action-btn {
+            background-color: #1D4ED8;
+            color: #fff;
+            padding: 5px 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+            margin: 2px;
+        }
+
+        .action-btn:hover {
+            background-color: #2563EB;
+        }
+
+        .header {
+            background-color: #fff;
+            top: 0;
+            left: 0;
+            right: 0;
+            position: fixed;
+            z-index: 50;
+        }
+
+        body {
+            margin-top: 80px;
+        }
+
+        .intro-section {
+            background-color: #f1f5f9;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            margin-bottom: 20px;
+            color: #000;
+        }
+
+        .panel {
+            max-width: 90%;
+            margin: 0 auto;
+        }
+
+        .panel-footer {
+            text-align: center;
+        }
+
+        .sidebar {
+            height: 100%;
+            width: 250px;
+            position: fixed;
+            z-index: 1000;
+            top: 0;
+            left: -250px;
+            background-color: white;
+            overflow-x: hidden;
+            transition: 0.3s;
+            padding-top: 20px;
+        }
+
+        .sidebar img {
+            display: block;
+            margin: 0 auto 20px;
+            width: 100px;
+        }
+
+        .sidebar a {
+            padding: 10px 15px;
+            text-decoration: none;
+            font-size: 18px;
+            color: #818181;
+            display: flex;
+            align-items: center;
+            transition: color 0.3s;
+        }
+
+        .sidebar a i {
+            margin-right: 10px;
+        }
+
+        .sidebar a:hover {
+            color: #f1f1f1;
+        }
+
+        .sidebar .closebtn {
+            position: absolute;
+            top: 0;
+            right: 25px;
+            font-size: 36px;
+            margin-left: 50px;
+        }
+
+        .sidebar .active {
+            background-color: #2563EB;
+            color: #fff;
+        }
+
+        #main {
+            transition: margin-left 0.3s;
+            padding: 16px;
+        }
+
+        .openbtn {
+            font-size: 20px;
+            cursor: pointer;
+            background-color: #1E3A8A;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            transition: background-color 0.3s;
+        }
+
+        .openbtn:hover {
+            background-color: #2563EB;
+        }
+
+        .dark-mode {
+            background-color: #a39fb266;
+            color: white;
+        }
+
+        .dark-mode .sidebar {
+            background-color: #1f2937;
+        }
+
+        .dark-mode .sidebar a {
+            color: #a1a1aa;
+        }
+
+        .dark-mode .sidebar a:hover {
+            color: #f1f1f1;
+        }
+
+        .dark-mode .header {
+            background-color: #1f2937;
+        }
+
+        .dark-mode #themeToggle i {
+            color: #FBBF24;
+        }
+
+        .dark-mode input,
+        .dark-mode textarea,
+        .dark-mode select {
+            background-color: #1f2937;
+            color: white;
+        }
+
+        .dark-mode .section {
+            background-color: #2d3748;
+        }
+
+        .chart-container {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .chart-container canvas {
+            width: 48%;
+            height: 400px;
+        }
+
+        .table th,
+        .table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+
+        .table th {
+            background-color: #f4f4f4;
+        }
+
+        .dark-mode .table th {
+            background-color: #4a5568;
+        }
+
+        .table tbody tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        .dark-mode .table tbody tr:nth-child(even) {
+            background-color: #2d3748;
+        }
+
+        .table tbody tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        .dark-mode .table tbody tr:hover {
+            background-color: #4a5568;
+        }
+
+        .table .icon {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .icon-true {
+            color: green;
+        }
+
+        .icon-false {
+            color: red;
+        }
+        
+        .progress-circle {
+            position: relative;
+            display: inline-block;
+            margin: 20px;
+        }
+
+        .progress-circle canvas {
+            width: 120px;
+            height: 120px;
+        }
+
+        .progress-circle .progress-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 20px;
+            font-weight: bold;
+            color: #1f2937;
+        }
+    </style>
+    <link rel="stylesheet" href="./assets/css/navbar.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+</head>
+
+<body class="bg-gray-100" id="body">
+<div id="nav-bar" style="z-index: 50">
+    <input id="nav-toggle" type="checkbox"/>
+    <div id="nav-header"><a id="nav-title" href="/dashboard" target="_blank">SwiftCar</a>
+        <label for="nav-toggle"><span id="nav-toggle-burger"></span></label>
+        <hr/>
+    </div>
+    <div id="nav-content">
+
+        <div style="background-color: #0ea5e9;color: black; border-radius: 15px;padding-left:10px;margin-right: 15px;" class="nav-button" id="new-reservation-button">&nbsp; <i class="bi bi-plus-square"></i> &nbsp; <span>New Reservation</span></div>
+        <div class="nav-button" id="dashboard-button">&nbsp; <i class="bi bi-stopwatch"></i>&nbsp; <span>Express Reservation</span></div>
+        <hr>
+        <div class="nav-button" id="reservations-button">&nbsp; <i class="bi bi-file-check"></i> &nbsp; <span>Reservations</span></div>
+        <div class="nav-button" id="historique-button">&nbsp; <i class="bi bi-clock-history"></i> &nbsp; <span>Historique</span></div>
+        <div class="nav-button" id="voitures-button">&nbsp; <i class="bi bi-car-front"></i> &nbsp; <span>Voitures</span></div>
+        <div class="nav-button" id="clients-button">&nbsp; <i class="bi bi-person-video2"></i> &nbsp; <span>Clients</span></div>
+        <hr>
+        <div class="nav-button" id="deconnexion-button">&nbsp; <i class="bi bi-box-arrow-left"></i> &nbsp; <span>Deconnexion</span></div>
+        <hr/>
+        <div id="nav-content-highlight"></div>
+    </div>
+    <input id="nav-footer-toggle" type="checkbox"/>
+    <div id="nav-footer">
+        <div id="nav-footer-heading">
+            <div id="nav-footer-avatar"><img src="https://gravatar.com/avatar/4474ca42d303761c2901fa819c4f2547"/></div>
+            <div id="nav-footer-titlebox"><a id="nav-footer-title" href="" target="_blank" style="font-size: small"></a><span id="nav-footer-subtitle">Manager</span></div>
+            <label for="nav-footer-toggle"><i class="fas fa-caret-up"></i></label>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.getElementById('dashboard-button').addEventListener('click', function() {
+        window.location.href = '/Dashboard';
+    });
+
+    document.getElementById('new-reservation-button').addEventListener('click', function() {
+        window.location.href = '/new-reservation';
+    });
+
+    document.getElementById('reservations-button').addEventListener('click', function() {
+        window.location.href = '/reservations';
+    });
+
+    document.getElementById('historique-button').addEventListener('click', function() {
+        window.location.href = '/historique';
+    });
+
+    document.getElementById('voitures-button').addEventListener('click', function() {
+        window.location.href = '/voitures';
+    });
+
+    document.getElementById('clients-button').addEventListener('click', function() {
+        window.location.href = '/clients';
+    });
+
+    document.getElementById('deconnexion-button').addEventListener('click', function() {
+        window.location.href = '/logout';
+    });
+
+</script>
+
+<script>
+    // Get the manager's name from local storage
+    var managerName = localStorage.getItem('manager_name');
+
+    // Get the span element where the manager's name will be displayed
+    var managerNameElement = document.querySelector('#nav-footer-titlebox a');
+
+    // Set the text content of the span element to the manager's name
+    managerNameElement.textContent = managerName;
+</script>
+
+    <div id="main" class="container mx-auto p-6 mt-24">
+        <div class="section chart-container">
+            <div>
+                <h2 class="text-xl font-bold">Reservation Status Charts</h2>
+                <canvas id="reservationsChart"></canvas>
+            </div>
+            <div>
+                <h2 class="text-xl font-bold">Reservation Acceptance Status</h2>
+                <canvas id="reservationsLineChart"></canvas>
+            </div>
+        </div>
+
+        <div class="section in-progress">
+            <h2 class="text-xl font-bold">Reservations In Progress</h2>
+            <div class="progress-circle">
+                <canvas id="inProgressCircle"></canvas>
+                <div class="progress-text" id="inProgressText">0%</div>
+            </div>
+            <div class="panel overflow-x-auto">
+                <div class="panel-body table-responsive">
+                    <table class="table w-full" id="reservationsInProgressTable">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Client</th>
+                                <th>Date Reservation</th>
+                                <th>Date Debut</th>
+                                <th>Date Fin</th>
+                                <th>Voiture ID</th>
+                                <th>Statut</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="section upcoming">
+            <h2 class="text-xl font-bold">Upcoming Reservations</h2>
+            <div class="progress-circle">
+                <canvas id="upcomingCircle"></canvas>
+                <div class="progress-text" id="upcomingText">0%</div>
+            </div>
+            <div class="panel overflow-x-auto">
+                <div class="panel-body table-responsive">
+                    <table class="table w-full" id="reservationsUpcomingTable">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Client</th>
+                                <th>Date Reservation</th>
+                                <th>Date Debut</th>
+                                <th>Date Fin</th>
+                                <th>Voiture ID</th>
+                                <th>Statut</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="section past">
+            <h2 class="text-xl font-bold">Past Reservations</h2>
+            <div class="progress-circle">
+                <canvas id="pastCircle"></canvas>
+                <div class="progress-text" id="pastText">0%</div>
+            </div>
+            <div class="panel overflow-x-auto">
+                <div class="panel-body table-responsive">
+                    <table class="table w-full" id="reservationsPastTable">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Client</th>
+                                <th>Date Reservation</th>
+                                <th>Date Debut</th>
+                                <th>Date Fin</th>
+                                <th>Voiture ID</th>
+                                <th>Statut</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        fetch('https://swift-car-django-server-4c51acec5937.herokuapp.com/reservations/view-all')
+            .then(response => response.json())
+            .then(data => {
+                const now = new Date();
+
+                const inProgress = data.filter(reservation => new Date(reservation.date_debut) <= now && new Date(reservation.date_fin) >= now);
+                const upcoming = data.filter(reservation => new Date(reservation.date_debut) > now);
+                const past = data.filter(reservation => new Date(reservation.date_fin) < now);
+                const accepted = data.filter(reservation => reservation.status === 'accepted');
+                const refused = data.filter(reservation => reservation.status === 'declined');
+
+                const total = data.length;
+                const inProgressPercentage = ((inProgress.length / total) * 100).toFixed(2);
+                const upcomingPercentage = ((upcoming.length / total) * 100).toFixed(2);
+                const pastPercentage = ((past.length / total) * 100).toFixed(2);
+
+                populateTable('reservationsInProgressTable', inProgress);
+                populateTable('reservationsUpcomingTable', upcoming);
+                populateTable('reservationsPastTable', past);
+
+                document.getElementById('inProgressText').innerText = `${inProgressPercentage}%`;
+                document.getElementById('upcomingText').innerText = `${upcomingPercentage}%`;
+                document.getElementById('pastText').innerText = `${pastPercentage}%`;
+
+                const inProgressCircle = new Chart(document.getElementById('inProgressCircle').getContext('2d'), {
+                    type: 'doughnut',
+                    data: {
+                        datasets: [{
+                            data: [inProgressPercentage, 100 - inProgressPercentage],
+                            backgroundColor: ['#22c55e', '#e5e7eb'],
+                            borderWidth: 0
+                        }]
+                    },
+                    options: {
+                        cutout: '75%',
+                        plugins: {
+                            tooltip: {
+                                enabled: false
+                            }
+                        }
+                    }
+                });
+
+                const upcomingCircle = new Chart(document.getElementById('upcomingCircle').getContext('2d'), {
+                    type: 'doughnut',
+                    data: {
+                        datasets: [{
+                            data: [upcomingPercentage, 100 - upcomingPercentage],
+                            backgroundColor: ['#3b82f6', '#e5e7eb'],
+                            borderWidth: 0
+                        }]
+                    },
+                    options: {
+                        cutout: '75%',
+                        plugins: {
+                            tooltip: {
+                                enabled: false
+                            }
+                        }
+                    }
+                });
+
+                const pastCircle = new Chart(document.getElementById('pastCircle').getContext('2d'), {
+                    type: 'doughnut',
+                    data: {
+                        datasets: [{
+                            data: [pastPercentage, 100 - pastPercentage],
+                            backgroundColor: ['#ef4444', '#e5e7eb'],
+                            borderWidth: 0
+                        }]
+                    },
+                    options: {
+                        cutout: '75%',
+                        plugins: {
+                            tooltip: {
+                                enabled: false
+                            }
+                        }
+                    }
+                });
+
+                const ctxBar = document.getElementById('reservationsChart').getContext('2d');
+                new Chart(ctxBar, {
+                    type: 'bar',
+                    data: {
+                        labels: ['In Progress', 'Upcoming', 'Past'],
+                        datasets: [{
+                            label: 'Number of Reservations',
+                            data: [inProgress.length, upcoming.length, past.length],
+                            backgroundColor: ['#22c55e', '#38bdf8', '#f87171'],
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+
+                const ctxLine = document.getElementById('reservationsLineChart').getContext('2d');
+                new Chart(ctxLine, {
+                    type: 'line',
+                    data: {
+                        labels: ['Accepted', 'Refused'],
+                        datasets: [{
+                            label: 'Reservation Acceptance Status',
+                            data: [accepted.length, refused.length],
+                            backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                            borderColor: 'rgba(54, 162, 235, 1)',
+                            borderWidth: 1,
+                            fill: true,
+                            tension: 0.4
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            })
+            .catch(error => console.error('Error:', error));
+
+        function populateTable(tableId, data) {
+            const tableBody = document.querySelector(`#${tableId} tbody`);
+            tableBody.innerHTML = '';
+            data.forEach(reservation => {
+                const row = document.createElement('tr');
+                let statusIcon = '';
+                if (reservation.status === 'accepted') {
+                    statusIcon = '<span class="icon"><i class="fas fa-check-circle icon-true"></i>Accepted</span>';
+                } else if (reservation.status === 'declined') {
+                    statusIcon = '<span class="icon"><i class="fas fa-times-circle icon-false"></i>Refused</span>';
+                } else {
+                    statusIcon = reservation.status;
+                }
+                row.innerHTML = `
+                    <td>${reservation._id}</td>
+                    <td>${reservation.client}</td>
+                    <td>${reservation.date_reservation}</td>
+                    <td>${reservation.date_debut}</td>
+                    <td>${reservation.date_fin}</td>
+                    <td>${reservation.voiture}</td>
+                    <td>${statusIcon}</td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+
+        function handleAccept(reservationId) {
+            const url = `https://swift-car-django-server-4c51acec5937.herokuapp.com/reservations/accepter/${reservationId}`;
+            fetch(url, {
+                method: 'GET'
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                location.reload();
+            })
+            .catch(error => console.error('Error:', error));
+        }
+
+        function handleRefuse(reservationId) {
+            const url = `https://swift-car-django-server-4c51acec5937.herokuapp.com/reservations/refuser/${reservationId}`;
+            fetch(url, {
+                method: 'GET'
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                location.reload();
+            })
+            .catch(error => console.error('Error:', error));
+        }
+
+        const themeToggle = document.getElementById('themeToggle');
+        const body = document.getElementById('body');
+        themeToggle.addEventListener('click', () => {
+            body.classList.toggle('dark-mode');
+            if (body.classList.contains('dark-mode')) {
+                themeToggle.innerHTML = '<i class="fas fa-moon text-xl"></i>';
+            } else {
+                themeToggle.innerHTML = '<i class="fas fa-sun text-xl"></i>';
+            }
+        });
+
+        const sidebarToggle = document.getElementById('sidebarToggle');
+        const sidebar = document.getElementById('mySidebar');
+        const main = document.getElementById('main');
+        const header = document.querySelector('.header');
+
+        sidebarToggle.addEventListener('click', () => {
+            if (sidebar.style.left === '0px') {
+                closeNav();
+            } else {
+                openNav();
+            }
+        });
+
+        function openNav() {
+            sidebar.style.left = "0";
+            main.style.marginLeft = "250px";
+            header.style.marginLeft = '250px';
+        }
+
+        function closeNav() {
+            sidebar.style.left = "-250px";
+            main.style.marginLeft = "0";
+            header.style.marginLeft = '0';
+        }
+    </script>
+</body>
+
+</html>

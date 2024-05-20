@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manager Login</title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css">
+    <style>
+        body {
+            font-family: 'Raleway', sans-serif;
+            background-color: #e7e7e7;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .wrapper {
+            width: 800px;
+            height: 650px;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            overflow: hidden;
+            background: #fff;
+        }
+        .login-text {
+            width: 800px;
+            height: 450px;
+            background: linear-gradient(to left, #3b82f6, #2563eb);
+            position: absolute;
+            top: -300px;
+            box-sizing: border-box;
+            padding: 6%;
+            transition: all 0.5s ease-in-out;
+            z-index: 11;
+            border-radius: 10px 10px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .text {
+            color: #fff;
+            display: none;
+            transition: all 0.5s ease-in-out;
+            transition-delay: 0.3s;
+            width: 50%;
+        }
+        .text a, .text a:visited {
+            font-size: 36px;
+            color: #fff;
+            text-decoration: none;  
+            font-weight: bold;
+            display: block;
+        }
+        .text hr {
+            width: 10%;
+            background-color: #fff;
+            font-size: 16px;
+            border: none;
+            height: 2px;
+            margin: 20px 0;
+        }
+        .text input {
+            margin-top: 20px;
+            height: 40px;
+            width: 100%;
+            border-radius: 5px;
+            border: none;
+            background-color: #444;
+            opacity: 0.7;
+            outline: none;
+            color: #fff;
+            padding-left: 10px;
+            transition: background-color 0.3s;
+        }
+        .text input:focus {
+            background-color: #555;
+        }
+        .text button {
+            margin-top: 40px;
+            height: 40px;
+            width: 140px;
+            outline: none;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .text .login-btn {
+            background: #fff;
+            border: none;
+            color: #2563eb;
+        }
+        .text .login-btn:hover {
+            background: #2563eb;
+            color: #fff;
+        }
+        .cta {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: #2563eb;
+            border: 2px solid #fff;
+            position: absolute;
+            bottom: -30px;
+            left: calc(50% - 30px);
+            color: #fff;
+            outline: none;
+            cursor: pointer;
+            z-index: 11;
+            transition: background-color 0.3s;
+        }
+        .cta:hover {
+            background: #3b82f6;
+        }
+        .call-text {
+            background-color: #fff;
+            width: 800px;
+            height: 450px;
+            position: absolute;
+            bottom: 0;
+            padding: 10%;
+            box-sizing: border-box;
+            text-align: center;
+            border-radius: 0 0 10px 10px;
+        }
+        .call-text h1 {
+            font-size: 42px;
+            margin-top: 10%;
+            color: #2563eb;
+        }
+        .call-text h1 span {
+            color: #333;
+            font-weight: bolder;
+        }
+        .call-text p {
+            font-size: 18px;
+            margin-top: 20px;
+        }
+        .call-text button {
+            height: 40px;
+            width: 180px;
+            border: none;
+            border-radius: 20px;
+            background: linear-gradient(to left, #3b82f6, #2563eb);
+            color: #fff;
+            font-weight: bolder;
+            margin-top: 30px;
+            cursor: pointer;
+            outline: none;
+            transition: background-color 0.3s;
+        }
+        .call-text button:hover {
+            background: #1d4ed8;
+        }
+        .login-image {
+            width: 45%;
+            height: auto;
+            margin-left: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .show-hide {
+            display: block;
+        }
+        .expand {
+            transform: translateY(300px);
+        }
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="login-text">
+            <div class="text">
+                <form id="loginForm">
+                <a href="#">Manager Login</a>
+                <hr>
+                    <input type="email" class="form-control" id="email" placeholder="mail@example.com" required>
+                    <input type="password" class="form-control" id="password" placeholder="Min. 8 characters" required>
+                    <button type="submit" class="btn btn-primary" id="submitBtn">Sign In</button>
+                </form>
+            </div>
+            <img src="https://i.pinimg.com/564x/f5/30/e1/f530e19d3bac5790ef02a4b6695b4efc.jpg" alt="Manager Login" class="login-image">
+            <button class="cta"><i class="fas fa-chevron-down fa-1x"></i></button>
+        </div>
+        <div class="call-text">
+            <h1>Pour gérer vos <span>réservations</span></h1>
+            <p>Cliquer sur le bouton ci-dessus pour afficher le formulaire de connexion.</p>
+        </div>
+    </div>
+    <script src="login.js"></script>
+
+    <script>
+        var cta = document.querySelectorAll(".cta");
+        var check = 0;
+
+        cta.forEach(function(button) {
+            button.addEventListener('click', function(e){
+                var loginText = document.querySelector('.login-text');
+                var text = loginText.querySelector('.text');
+                text.classList.toggle('show-hide');
+                loginText.classList.toggle('expand');
+                if(check == 0) {
+                    cta.forEach(function(btn) {
+                        btn.innerHTML = "<i class='fas fa-chevron-up'></i>";
+                    });
+                    check++;
+                } else {
+                    cta.forEach(function(btn) {
+                        btn.innerHTML = "<i class='fas fa-chevron-down'></i>";
+                    });
+                    check = 0;
+                }
+            });
+        });
+    </script>
+</body>
+</html>

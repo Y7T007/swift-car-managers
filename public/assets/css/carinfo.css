@@ -1,0 +1,205 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+
+body, html {
+    height: 100%;
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+.blur-background {
+    background-image: url('../images/welcome-hero/carinfo.jpg'); /* Ensure the path is correct */
+    backdrop-filter: blur(10px);
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.container {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+.car-info {
+    margin-left: 100px; /* Adds space to the left, moving contents to the right */
+    padding-left: 30px; /* Additional padding for alignment */
+    padding-right: 0;
+}
+
+/* Other styles unchanged, ensure they align with your needs */
+
+/* Additional styles for maintaining the layout and responsiveness */
+@media (max-width: 768px) {
+    .blur-background {
+        padding: 10px;
+    }
+}
+.car-details {
+    margin-left: 20px; /* Adjust this value as needed to move the div to the right */
+}
+@media (max-width: 768px) {
+    .car-info {
+        margin-left: 10px; /* Less margin on smaller screens */
+    }
+}
+
+
+.container {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    background-image: url('../images/welcome-hero/carinfo.jpg'); /* Add your image link here */
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0.1, 0.1, 0.1, 0.1);
+    backdrop-filter: blur(10px); /* Blur effect */
+    border-radius: 8px; /* Optional: for rounded corners */
+    padding: 20px; /* Optional: for internal spacing */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: for subtle shadow */
+}
+
+img {
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
+}
+
+.bg-light {
+    background-color: #e9ecef;
+    padding: 20px;
+    border-radius: 5px;
+    margin-top: -30px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+}
+
+.text-muted {
+    color: #6c757d;
+}
+
+.h4, .h5 {
+    font-weight: 700;
+}
+
+.ps-30, .pe-0 {
+    padding-left: 30px;
+    padding-right: 0;
+}
+
+.form-control, .form-control2, .form-control3 {
+    border-radius: 5px;
+    border: 1px solid #ced4da;
+    transition: all 0.2s;
+}
+
+.form-control:hover, .form-control:focus,
+.form-control2:hover, .form-control2:focus,
+.form-control3:hover, .form-control3:focus {
+    border-color: #80bdff;
+    box-shadow: 0 0 0 0.2rem rgba(0,123,255,0.25);
+}
+
+.btn-primary {
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+.fas {
+    margin-left: 5px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .ps-30, .pe-0 {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+}
+
+.container {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+img {
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
+}
+
+.bg-light {
+    background-color: #e9ecef;
+    padding: 20px;
+    border-radius: 5px;
+    margin-top: -30px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+}
+
+.text-muted {
+    color: #6c757d;
+}
+
+.h4, .h5 {
+    font-weight: 700;
+}
+
+.ps-30, .pe-0 {
+    padding-left: 30px;
+    padding-right: 0;
+}
+
+.form-control, .form-control2, .form-control3 {
+    border-radius: 5px;
+    border: 1px solid #ced4da;
+    transition: all 0.2s;
+}
+
+.form-control:hover, .form-control:focus,
+.form-control2:hover, .form-control2:focus,
+.form-control3:hover, .form-control3:focus {
+    border-color: #80bdff;
+    box-shadow: 0 0 0 0.2rem rgba(0,123,255,0.25);
+}
+
+.btn-primary {
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+.fas {
+    margin-left: 5px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .ps-30, .pe-0 {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+}
+

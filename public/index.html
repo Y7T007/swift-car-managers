@@ -1,0 +1,911 @@
+<!doctype html>
+<html class="no-js" lang="en">
+
+<head>
+	<!-- meta data -->
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+	<!--font-family-->
+	<link href="https://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Rufina:400,700" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css">
+
+	<!-- title of site -->
+	<title>CarVilla</title>
+
+	<!-- For favicon png -->
+	<link rel="shortcut icon" type="image/icon" href="../assets/logo/favicon.png" />
+
+	<!--font-awesome.min.css-->
+	<link rel="stylesheet" href="../assets/css/font-awesome.min.css">
+
+	<!--linear icon css-->
+	<link rel="stylesheet" href="../assets/css/linearicons.css">
+
+	<!--flaticon.css-->
+	<link rel="stylesheet" href="../assets/css/flaticon.css">
+
+	<!--animate.css-->
+	<link rel="stylesheet" href="../assets/css/animate.css">
+
+	<!--owl.carousel.css-->
+	<link rel="stylesheet" href="../assets/css/owl.carousel.min.css">
+	<link rel="stylesheet" href="../assets/css/owl.theme.default.min.css">
+
+	<!--bootstrap.min.css-->
+	<link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+
+	<!-- bootsnav -->
+	<link rel="stylesheet" href="../assets/css/bootsnav.css">
+
+	<!--style.css-->
+	<link rel="stylesheet" href="../assets/css/style.css">
+
+	<!--responsive.css-->
+	<link rel="stylesheet" href="../assets/css/responsive.css">
+
+	<!-- Tailwind CSS -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css">
+
+	<!-- Sidebar and Header Styles -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+	<style>
+		@import url(https://fonts.googleapis.com/css?family=Roboto);
+
+		html, body {
+			font-family: 'Roboto', sans-serif;
+			height: 100%;
+			margin: 0;
+			padding: 0;
+			overflow-x: hidden;
+		}
+
+		body {
+			background: linear-gradient(to bottom, #ddd 0%, #f0f0f0 40%);
+			transform-style: preserve-3d;
+			transform: perspective(800px);
+		}
+
+		.hidden {
+			display: none;
+		}
+
+		.visible {
+			display: block;
+		}
+
+		.blur-background {
+			backdrop-filter: blur(10px);
+			background: rgba(255, 255, 255, 0.6);
+		}
+
+		.btn-custom {
+			font-size: 18px;
+			font-weight: 600;
+			padding: 10px 20px;
+			border-radius: 5px;
+		}
+
+		.btn-primary-custom {
+			background-color: #1D4ED8;
+			color: #fff;
+			border: none;
+			transition: background-color 0.3s;
+		}
+
+		.btn-primary-custom:hover {
+			background-color: #2563EB;
+		}
+
+		.btn-secondary-custom {
+			background-color: #6B7280;
+			color: #fff;
+			border: none;
+			transition: background-color 0.3s;
+		}
+
+		.btn-secondary-custom:hover {
+			background-color: #4B5563;
+		}
+
+		.form-control-custom {
+			border: 1px solid #D1D5DB;
+			padding: 10px;
+			border-radius: 5px;
+			transition: border-color 0.3s;
+		}
+
+		.form-control-custom:focus {
+			border-color: #2563EB;
+			outline: none;
+			box-shadow: none;
+		}
+
+		.featured-card-wrap {
+			position: relative;
+			perspective: 600px;
+			height: 450px;
+			width: 100%;
+			margin: 20px 0;
+			margin-bottom: 50px;
+			text-align: center;
+		}
+
+		.featured-card-shadow,
+		.featured-card {
+			width: 100%;
+			height: 100%;
+			position: absolute;
+			border-radius: 10px;
+			top: 0;
+			left: 0;
+		}
+
+		.featured-card {
+			background: #fff url("https://images.unsplash.com/photo-1441716844725-09cedc13a4e7?fit=crop&fm=jpg&h=950&q=80&w=1925") 50% 50%;
+			background-size: cover;
+			z-index: 2;
+		}
+
+		.featured-card-shine {
+			position: absolute;
+			width: 100%;
+			height: 100%;
+			transform-style: preserve-3d;
+			z-index: 3;
+			border-radius: 10px;
+			background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 60%);
+		}
+
+		.featured-card-shadow {
+			top: 10px;
+			transform-style: preserve-3d;
+			transform: translateZ(40px);
+			z-index: 1;
+			background: #B3B3B3;
+			transform: scale(0.9, 0.9);
+			box-shadow: 0 0 30px 10px #aaa;
+		}
+
+		.featured-card-front,
+		.featured-card-title,
+		.featured-card-subtitle {
+			position: absolute;
+			color: #FFF;
+			transform-style: preserve-3d;
+		}
+
+		.featured-card-front {
+			border-radius: 10px;
+			width: 100%;
+			height: 100%;
+			z-index: 2;
+			background-color: rgba(0, 0, 0, 0.1);
+		}
+
+		.featured-card-title {
+			font-weight: 700;
+			text-align: left;
+			left: 30px;
+			bottom: 140px;
+			font-size: 35px;
+			line-height: 30px;
+			text-shadow: 0 5px 8px rgba(0, 0, 0, 0.65);
+			transform: translateZ(0px);
+			margin: 0;
+			width: 80%;
+		}
+
+		.featured-card-subtitle {
+			font-weight: normal;
+			text-align: left;
+			left: 30px;
+			width: 80%;
+			bottom: 80px;
+			font-size: 25px;
+			line-height: 20px;
+			text-shadow: 0 3px 6px rgba(0, 0, 0, 0.8);
+			transform: translateZ(0px);
+		}
+
+		.add-client-btn {
+			background-color: #1D4ED8;
+			color: #fff;
+			padding: 10px 20px;
+			border-radius: 5px;
+			transition: background-color 0.3s;
+		}
+
+		.add-client-btn:hover {
+			background-color: #2563EB;
+		}
+
+		.client-card {
+			border: 1px solid #e5e7eb;
+			border-radius: 10px;
+			overflow: hidden;
+			transition: transform 0.3s;
+		}
+
+		.client-card:hover {
+			transform: translateY(-5px);
+		}
+
+		.modal {
+			display: none;
+			position: fixed;
+			z-index: 1000;
+			left: 0;
+			top: 0;
+			width: 100%;
+			height: 100%;
+			overflow: auto;
+			background-color: rgba(180, 207, 245, 0.4);
+			padding-top: 60px;
+		}
+
+		.modal-content {
+			background-color: #fefefe;
+			margin: 5% auto;
+			padding: 20px;
+			border: 1px solid #888;
+			width: 80%;
+			max-width: 500px;
+			border-radius: 10px;
+		}
+
+		.close {
+			color: #aaa;
+			float: right;
+			font-size: 28px;
+			font-weight: bold;
+		}
+
+		.close:hover,
+		.close:focus {
+			color: black;
+			text-decoration: none;
+			cursor: pointer;
+		}
+
+		/* Sidebar styles */
+		.sidebar {
+			height: 100%;
+			overflow: auto;
+			width: 250px;
+			position: fixed;
+			z-index: 1000;
+			top: 0;
+			left: -250px;
+			background-color: white;
+			overflow-x: hidden;
+			transition: 0.3s;
+			padding-top: 20px;
+		}
+
+		.sidebar img {
+			display: block;
+			margin: 0 auto 20px;
+			width: 100px;
+		}
+
+		.sidebar a {
+			padding: 10px 15px;
+			text-decoration: none;
+			font-size: 18px;
+			color: #818181;
+			display: flex;
+			align-items: center;
+			transition: color 0.3s;
+		}
+
+		.sidebar a i {
+			margin-right: 10px;
+		}
+
+		.sidebar a:hover {
+			color: #f1f1f1;
+		}
+
+		.sidebar .closebtn {
+			position: absolute;
+			top: 0;
+			right: 25px;
+			font-size: 36px;
+			margin-left: 50px;
+		}
+
+		.sidebar .active {
+			background-color: #2563EB;
+			color: #fff;
+		}
+
+		#main {
+			transition: margin-left 0.3s;
+			padding: 16px;
+			margin-left: 250px;
+		}
+
+		.openbtn {
+			font-size: 20px;
+			cursor: pointer;
+			background-color: #1E3A8A;
+			color: white;
+			padding: 10px 15px;
+			border: none;
+			transition: background-color 0.3s;
+		}
+
+		.openbtn:hover {
+			background-color: #2563EB;
+		}
+
+		/* Dark mode styles */
+		.dark-mode {
+			background-color: #a39fb266;
+			color: white;
+		}
+
+		.dark-mode .client-card {
+			border-color: #838e9d89;
+			background-color: #838e9d89;
+		}
+
+		.dark-mode .add-client-btn {
+			background-color: #3B82F6;
+		}
+
+		.dark-mode .add-client-btn:hover {
+			background-color: #2563EB;
+		}
+
+		.dark-mode .sidebar {
+			background-color: #1f2937;
+		}
+
+		.dark-mode .sidebar a {
+			color: #a1a1aa;
+		}
+
+		.dark-mode .sidebar a:hover {
+			color: #f1f1f1;
+		}
+
+		.dark-mode .modal-content {
+			background-color: #1f2937;
+			color: white;
+		}
+
+		.dark-mode .close {
+			color: #fff;
+		}
+
+		.dark-mode .header {
+			background-color: #1f2937;
+		}
+
+		.dark-mode #themeToggle i {
+			color: #FBBF24;
+		}
+
+		.dark-mode input,
+		.dark-mode textarea,
+		.dark-mode select {
+			background-color: #1f2937;
+			color: white;
+		}
+
+		.header {
+			background-color: #fff;
+			top: 0;
+			left: 0;
+			right: 0;
+			position: fixed;
+			z-index: 50;
+			width: 100%;
+			transition: left 0.3s;
+			padding: 16px;
+			box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+		}
+
+		.intro-section {
+			background-color: #f1f5f9;
+			padding: 20px;
+			border-radius: 10px;
+			text-align: center;
+			margin-bottom: 20px;
+			color: #000;
+		}
+
+		.intro-section h2 {
+			font-size: 1.5rem;
+			font-weight: 600;
+			margin-bottom: 10px;
+		}
+
+		.intro-section p {
+			font-size: 1rem;
+			margin-bottom: 20px;
+		}
+
+		.dark-mode .intro-section {
+			background-color: #2d3748;
+			color: #f1f5f9;
+		}
+
+		@media screen and (max-width: 768px) {
+			.header {
+				left: 0;
+			}
+
+			#main {
+				margin-left: 0;
+			}
+		}
+	</style>
+	<link rel="stylesheet" href="./assets/css/navbar.css">
+</head>
+
+<body class="bg-gray-100" id="body">
+	
+<!--	 Sidebar -->
+<!--	<div id="mySidebar" class="sidebar">-->
+<!--		<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>-->
+<!--		<img src="../assets/images/welcome-hero/logo.png" alt="Logo">-->
+<!--		<a href="/Dashboard" class="sidebar-link"><i class="bi bi-grid"></i> Dashboard</a>-->
+<!--		<a href="/new-reservation" class="sidebar-link"><i class="bi bi-plus-square"></i> New Reservation</a>-->
+<!--		<a href="/reservations" class="sidebar-link"><i class="bi bi-file-check"></i> Reservations</a>-->
+<!--		<a href="/historique" class="sidebar-link"><i class="bi bi-clock-history"></i> Historique</a>-->
+<!--		<a href="/voitures" class="sidebar-link"><i class="bi bi-car-front"></i> Voitures</a>-->
+<!--		<a href="/clients" class="sidebar-link"><i class="bi bi-person-video2"></i> Clients</a>-->
+<!--		<a href="/logout" class="sidebar-link"><i class="bi bi-box-arrow-left"></i> Deconnexion</a>-->
+<!--	</div>-->
+<!--	-->
+
+	<div id="nav-bar" style="z-index: 50">
+		<input id="nav-toggle" type="checkbox"/>
+		<div id="nav-header"><a id="nav-title" href="/dashboard" target="_blank">SwiftCar</a>
+			<label for="nav-toggle"><span id="nav-toggle-burger"></span></label>
+			<hr/>
+		</div>
+		<div id="nav-content">
+
+			<div style="background-color: #0ea5e9;color: black; border-radius: 15px;padding: 25px;margin-right: 15px;margin-left: 15px" class="nav-button" id="new-reservation-button">&nbsp; <i class="bi bi-plus-square"></i> &nbsp; <span>New Reservation</span></div>
+			<div class="nav-button" id="dashboard-button">&nbsp; <i class="bi bi-stopwatch"></i>&nbsp; <span>Express Reservation</span></div>
+			<hr>
+			<div class="nav-button" id="reservations-button">&nbsp; <i class="bi bi-file-check"></i> &nbsp; <span>Reservations</span></div>
+			<div class="nav-button" id="historique-button">&nbsp; <i class="bi bi-clock-history"></i> &nbsp; <span>Historique</span></div>
+			<div class="nav-button" id="voitures-button">&nbsp; <i class="bi bi-car-front"></i> &nbsp; <span>Voitures</span></div>
+			<div class="nav-button" id="clients-button">&nbsp; <i class="bi bi-person-video2"></i> &nbsp; <span>Clients</span></div>
+			<hr>
+			<div class="nav-button" id="deconnexion-button">&nbsp; <i class="bi bi-box-arrow-left"></i> &nbsp; <span>Deconnexion</span></div>
+			<hr/>
+			<div id="nav-content-highlight"></div>
+		</div>
+		<input id="nav-footer-toggle" type="checkbox"/>
+		<div id="nav-footer">
+			<div id="nav-footer-heading">
+				<div id="nav-footer-avatar"><img src="https://gravatar.com/avatar/4474ca42d303761c2901fa819c4f2547"/></div>
+				<div id="nav-footer-titlebox"><a id="nav-footer-title" href="https://codepen.io/uahnbu/pens/public" target="_blank" style="font-size: small"></a><span id="nav-footer-subtitle">Manager</span></div>
+				<label for="nav-footer-toggle"><i class="fas fa-caret-up"></i></label>
+			</div>
+		</div>
+	</div>
+
+<script>
+	document.getElementById('dashboard-button').addEventListener('click', function() {
+		window.location.href = '/Dashboard';
+	});
+
+	document.getElementById('new-reservation-button').addEventListener('click', function() {
+		window.location.href = '/new-reservation';
+	});
+
+	document.getElementById('reservations-button').addEventListener('click', function() {
+		window.location.href = '/reservations';
+	});
+
+	document.getElementById('historique-button').addEventListener('click', function() {
+		window.location.href = '/historique';
+	});
+
+	document.getElementById('voitures-button').addEventListener('click', function() {
+		window.location.href = '/voitures';
+	});
+
+	document.getElementById('clients-button').addEventListener('click', function() {
+		window.location.href = '/clients';
+	});
+
+	document.getElementById('deconnexion-button').addEventListener('click', function() {
+		window.location.href = '/logout';
+	});
+
+</script>
+
+	<script>
+		// Get the manager's name from local storage
+		var managerName = localStorage.getItem('manager_name');
+
+		// Get the span element where the manager's name will be displayed
+		var managerNameElement = document.querySelector('#nav-footer-titlebox a');
+
+		// Set the text content of the span element to the manager's name
+		managerNameElement.textContent = managerName;
+	</script>
+
+
+	<!-- Main Content -->
+	<div style="display: block;">
+		<section id="home" class="welcome-hero">
+			<div class="container">
+				<div class="welcome-hero-txt">
+					<h2>Swift Car</h2>
+					<p>Gestion de location des voitures "Swift Car" Casablanca Barnoussi Rue 10 Nr 45</p>
+					<button class="welcome-btn" onclick="window.location.href='#model-search-section'">Réserver maintenant</button>
+				</div>
+			</div>
+
+			<div class="container" >
+				<div class="row">
+					<div class="col-md-12">
+						<div class="model-search-content">
+							<div class="row">
+								<div class="col-md-offset-1 col-md-2 col-sm-12" id="model-search-section">
+									<div class="single-model-search">
+										<h2>select year</h2>
+										<div class="model-select-icon">
+											<select class="form-control">
+												<option value="default">year</option><!-- /.option-->
+												<option value="2018">2018</option><!-- /.option-->
+												<option value="2017">2017</option><!-- /.option-->
+												<option value="2016">2016</option><!-- /.option-->
+											</select><!-- /.select-->
+										</div><!-- /.model-select-icon -->
+									</div>
+									<div class="single-model-search">
+										<h2>body style</h2>
+										<div class="model-select-icon">
+											<select class="form-control">
+												<option value="default">style</option><!-- /.option-->
+												<option value="sedan">sedan</option><!-- /.option-->
+												<option value="van">van</option><!-- /.option-->
+												<option value="roadster">roadster</option><!-- /.option-->
+											</select><!-- /.select-->
+										</div><!-- /.model-select-icon -->
+									</div>
+								</div>
+								<div class="col-md-offset-1 col-md-2 col-sm-12">
+									<div class="single-model-search">
+										<h2>select make</h2>
+										<div class="model-select-icon">
+											<select class="form-control">
+												<option value="default">make</option><!-- /.option-->
+												<option value="toyota">toyota</option><!-- /.option-->
+												<option value="holden">holden</option><!-- /.option-->
+												<option value="maecedes-benz">maecedes-benz.</option><!-- /.option-->
+											</select><!-- /.select-->
+										</div><!-- /.model-select-icon -->
+									</div>
+									<div class="single-model-search">
+										<h2>car condition</h2>
+										<div class="model-select-icon">
+											<select class="form-control">
+												<option value="default">condition</option><!-- /.option-->
+												<option value="something">something</option><!-- /.option-->
+												<option value="something">something</option><!-- /.option-->
+												<option value="something">something</option><!-- /.option-->
+											</select><!-- /.select-->
+										</div><!-- /.model-select-icon -->
+										</div>
+								</div>
+								<div class="col-md-offset-1 col-md-2 col-sm-12">
+									<div class="single-model-search">
+										<h2>select model</h2>
+										<div class="model-select-icon">
+											<select class="form-control">
+												<option value="default">model</option><!-- /.option-->
+												<option value="kia-rio">kia-rio</option><!-- /.option-->
+												<option value="mitsubishi">mitsubishi</option><!-- /.option-->
+												<option value="ford">ford</option><!-- /.option-->
+											</select><!-- /.select-->
+										</div><!-- /.model-select-icon -->
+									</div>
+									<div class="single-model-search">
+										<h2>select price</h2>
+										<div class="model-select-icon">
+											<select class="form-control">
+												<option value="default">price</option><!-- /.option-->
+												<option value="$0.00">$0.00</option><!-- /.option-->
+												<option value="$0.00">$0.00</option><!-- /.option-->
+												<option value="$0.00">$0.00</option><!-- /.option-->
+											</select><!-- /.select-->
+										</div><!-- /.model-select-icon -->
+									</div>
+								</div>
+								<div class="col-md-2 col-sm-12">
+									<div class="single-model-search text-center">
+										<button class="welcome-btn model-search-btn" onclick="window.location.href='#'">
+											search
+										</button>
+									</div>
+								</div>
+							</div>
+						</div><!-- /.model-search-content -->
+					</div><!-- /.col-md-12 -->
+				</div><!-- /.row -->
+			</div><!-- /.container -->
+		</section><!--/.welcome-hero-->
+
+		<section id="featured-cars" class="featured-cars" style="margin-top: 100px;">
+			<div class="container">
+				<div class="section-header">
+					<p>checkout <span>the</span> featured cars</p>
+					<h2>featured cars</h2>
+				</div><!--/.section-header-->
+				<div class="featured-cars-content">
+					<div class="row">
+						<!-- Card 1: BMW 6-series gran coupe -->
+						<div class="col-lg-3 col-md-4 col-sm-6">
+							<div class='featured-card-wrap'>
+								<div class='featured-card-shadow'></div>
+								<div class='featured-card'
+									style="background-image: url('./assets/images/featured-cars/fc1.jpg');">
+									<div class='featured-card-front'>
+										<div class='featured-card-title'>BMW 6-series gran coupe</div>
+										<div class='featured-card-subtitle'>$89,395</div>
+										<div class='featured-card-shine'></div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<!-- Card 2: Chevrolet Camaro -->
+						<div class="col-lg-3 col-md-4 col-sm-6">
+							<div class='featured-card-wrap'>
+								<div class='featured-card-shadow'></div>
+								<div class='featured-card'
+									style="background-image: url('./assets/images/featured-cars/fc2.jpg');">
+									<div class='featured-card-front'>
+										<div class='featured-card-title'>Chevrolet Camaro</div>
+										<div class='featured-card-subtitle'>$66,575</div>
+										<div class='featured-card-shine'></div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<!-- Card 3: Lamborghini V520 -->
+						<div class="col-lg-3 col-md-4 col-sm-6">
+							<div class='featured-card-wrap'>
+								<div class='featured-card-shadow'></div>
+								<div class='featured-card'
+									style="background-image: url('./assets/images/featured-cars/fc3.jpg');">
+									<div class='featured-card-front'>
+										<div class='featured-card-title'>Lamborghini V520</div>
+										<div class='featured-card-subtitle'>$125,250</div>
+										<div class='featured-card-shine'></div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<!-- Card 4: Audi A3 Sedan -->
+						<div class="col-lg-3 col-md-4 col-sm-6">
+							<div class='featured-card-wrap'>
+								<div class='featured-card-shadow'></div>
+								<div class='featured-card'
+									style="background-image: url('./assets/images/featured-cars/fc4.jpg');">
+									<div class='featured-card-front'>
+										<div class='featured-card-title'>Audi A3 Sedan</div>
+										<div class='featured-card-subtitle'>$95,500</div>
+										<div class='featured-card-shine'></div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<!-- Additional cars: -->
+						<!-- Card 5: Tesla Model S -->
+						<div class="col-lg-3 col-md-4 col-sm-6">
+							<div class='featured-card-wrap'>
+								<div class='featured-card-shadow'></div>
+								<div class='featured-card'
+									style="background-image: url('./assets/images/featured-cars/tesla.jpg');">
+									<div class='featured-card-front'>
+										<div class='featured-card-title'>Tesla Model</div>
+										<div class='featured-card-subtitle'>$79,990</div>
+										<div class='featured-card-shine'></div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<!-- Card 6: Ford Mustang -->
+						<div class="col-lg-3 col-md-4 col-sm-6">
+							<div class='featured-card-wrap'>
+								<div class='featured-card-shadow'></div>
+								<div class='featured-card'
+									style="background-image: url('./assets/images/featured-cars/ford_mustang.jpg');">
+									<div class='featured-card-front'>
+										<div class='featured-card-title'>Ford Mustang</div>
+										<div class='featured-card-subtitle'>$55,300</div>
+										<div class='featured-card-shine'></div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<!-- Card 7: Porsche 911 -->
+						<div class="col-lg-3 col-md-4 col-sm-6">
+							<div class='featured-card-wrap'>
+								<div class='featured-card-shadow'></div>
+								<div class='featured-card'
+									style="background-image: url('./assets/images/featured-cars/porshe_911.jpg');">
+									<div class='featured-card-front'>
+										<div class='featured-card-title'>Porsche 911</div>
+										<div class='featured-card-subtitle'>$120,700</div>
+										<div class='featured-card-shine'></div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<!-- Card 8: Mercedes-Benz E-Class -->
+						<div class="col-lg-3 col-md-4 col-sm-6">
+							<div class='featured-card-wrap'>
+								<div class='featured-card-shadow'></div>
+								<div class='featured-card'
+									style="background-image: url('./assets/images/featured-cars/mercedes_e_class.jpg');">
+									<div class='featured-card-front'>
+										<div class='featured-card-title'>Mercedes-Benz E-Class</div>
+										<div class='featured-card-subtitle'>$74,950</div>
+										<div class='featured-card-shine'></div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div><!--/.featured-cars-content-->
+			</div><!--/.container-->
+		</section><!--/.featured-cars-->
+	</div><!--/.main-content-->
+	</div><!--/.main-content-->
+
+	<div id="scroll-Top">
+		<div class="return-to-top">
+			<i class="fa fa-angle-up" id="scroll-top" data-toggle="tooltip" data-placement="top" title=""
+				data-original-title="Back to Top" aria-hidden="true"></i>
+		</div>
+	</div><!--/.scroll-Top-->
+
+	<!-- Include all js compiled plugins (below), or include individual files as needed -->
+	<script src="../assets/js/jquery.js"></script>
+	<!--modernizr.min.js-->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+	<!--bootstrap.min.js-->
+	<script src="../assets/js/bootstrap.min.js"></script>
+	<!-- bootsnav js -->
+	<script src="../assets/js/bootsnav.js"></script>
+	<!--owl.carousel.js-->
+	<script src="../assets/js/owl.carousel.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+	<!--Custom JS-->
+	<script src="../assets/js/custom.js"></script>
+
+	<script>
+		$(document).ready(function () {
+			$('.featured-card-wrap').mousemove(function (event) {
+				var $card = $(this).find('.featured-card'),
+					$cardTitle = $(this).find('.featured-card-title'),
+					$cardSubtitle = $(this).find('.featured-card-subtitle'),
+					$cardShine = $(this).find('.featured-card-shine'),
+					$cardShadow = $(this).find('.featured-card-shadow'),
+					currentMousePos = { x: 0, y: 0 },
+					mouseFromCenter = { x: 0, y: 0 };
+
+				var wHeight = $(this).height(),
+					wWidth = $(this).width();
+
+				currentMousePos.x = event.pageX - $(this).offset().left;
+				currentMousePos.y = event.pageY - $(this).offset().top;
+				mouseFromCenter.x = currentMousePos.x - (wWidth / 2);
+				mouseFromCenter.y = currentMousePos.y - (wHeight / 2);
+
+				var around1 = -1 * (currentMousePos.y * 100 / wHeight * 0.2 - 10) + 'deg',
+					around2 = 1 * (currentMousePos.x * 100 / wWidth * 0.2 - 10) + 'deg',
+					trans1 = (currentMousePos.x * 100 / wHeight * 0.3) + 'px',
+					trans2 = (currentMousePos.y * 100 / wHeight * 0.3) + 'px',
+					dy = event.pageY - wHeight / 2,
+					dx = event.pageX - wWidth / 2,
+					theta = Math.atan2(dy, dx),
+					angle = theta * 180 / Math.PI - 90,
+					mousePositionX = (currentMousePos.x / wWidth) * 100,
+					mousePositionY = 50 + (currentMousePos.y / wHeight) * 10;
+
+				$cardShine.css('background', 'linear-gradient(' + angle + 'deg, rgba(255,255,255,' + (currentMousePos.y / wHeight) * .7 + ') 0%,rgba(255,255,255, 0) 80%)');
+				$card.css({
+					"-webkit-transform": "translate3d(" + trans1 + ", " + trans2 + ", 0) scale(1) rotatex(" + around1 + ") rotatey(" + around2 + ")",
+					"transform": "translate3d(" + trans1 + ", " + trans2 + ", 0) scale(1) rotatex(" + around1 + ") rotatey(" + around2 + ")",
+					'background-position': mousePositionX + '%' + ' ' + (currentMousePos.y / wHeight) * 50 + '%'
+				});
+				$cardShadow.css({
+					"transform": "scale(.9,.9) translateX(" + ((mouseFromCenter.x * -0.02) + 12) + "px) translateY(" + ((mouseFromCenter.y * -0.02) + 12) + "px) scale(1.0) rotateY(" + (mouseFromCenter.x / 25) * 0.5 + "deg) rotateX(" + ((mouseFromCenter.y / -25)) + "deg)"
+				});
+				$cardTitle.css({
+					"transform": "translateX(" + ((mouseFromCenter.x / 25) * 0.7) + "px) translateY(" + ((mouseFromCenter.y / 25) * 1.65) + "px)"
+				});
+				$cardSubtitle.css({
+					"transform": "translateX(" + ((mouseFromCenter.x / 25) * 0.5) + "px) translateY(" + ((mouseFromCenter.y / 25) * 1.15) + "px) translateZ(60px)"
+				});
+			});
+
+			$('.featured-card-wrap').mouseleave(function () {
+				var $card = $(this).find('.featured-card'),
+					$cardShadow = $(this).find('.featured-card-shadow'),
+					$cardTitle = $(this).find('.featured-card-title'),
+					$cardSubtitle = $(this).find('.featured-card-subtitle');
+
+				$card.css({
+					"-webkit-transform": "none",
+					"transform": "none"
+				});
+				$cardShadow.css({
+					"transform": "none"
+				});
+				$cardTitle.css({
+					"transform": "none"
+				});
+				$cardSubtitle.css({
+					"transform": "none"
+				});
+			});
+		});
+
+		// Theme toggle
+		const themeToggle = document.getElementById('themeToggle');
+		const body = document.getElementById('body');
+		themeToggle.addEventListener('click', () => {
+			body.classList.toggle('dark-mode');
+			if (body.classList.contains('dark-mode')) {
+				themeToggle.innerHTML = '<i class="fas fa-moon text-xl"></i>';
+			} else {
+				themeToggle.innerHTML = '<i class="fas fa-sun text-xl"></i>';
+			}
+		});
+
+		// Sidebar functions
+		const sidebarToggle = document.getElementById('sidebarToggle');
+		const sidebar = document.getElementById('mySidebar');
+		const main = document.getElementById('main');
+		const header = document.querySelector('.header');
+
+		sidebarToggle.addEventListener('click', () => {
+			if (sidebar.style.left === '0px') {
+				closeNav();
+			} else {
+				openNav();
+			}
+		});
+
+		function openNav() {
+			sidebar.style.left = "0";
+			main.style.marginLeft = "250px";
+			header.style.left = '250px';
+		}
+
+		function closeNav() {
+			sidebar.style.left = "-250px";
+			main.style.marginLeft = "0";
+			header.style.left = '0';
+		}
+	</script>
+</body>
+</html>

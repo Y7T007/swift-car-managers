@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+    <meta
+      http-equiv="X-UA-Compatible"
+      content="ie=edge"
+    />
+    <title>Cars</title>
+    <link
+      rel="preconnect"
+      href="https://fonts.googleapis.com"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
+    <script
+      src="https://kit.fontawesome.com/47cb46ef94.js"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              border: 'hsl(var(--border))',
+              input: 'hsl(var(--input))',
+              ring: 'hsl(var(--ring))',
+              background: 'hsl(var(--background))',
+              foreground: 'hsl(var(--foreground))',
+              primary: {
+                DEFAULT: '#029293',
+                foreground: 'hsl(var(--primary-foreground))',
+              },
+              hover: '#0c7878',
+              secondary: {
+                DEFAULT: 'hsl(var(--secondary))',
+                foreground: 'hsl(var(--secondary-foreground))',
+              },
+            },
+          },
+        },
+      };
+    </script>
+    <link
+      href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <!-- Custom Styles -->
+    <link
+      rel="stylesheet"
+      href="tailwind.css"
+    />
+  </head>
+  <body>
+  <div id="spinner" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);">Loading...</div>
+    <div
+      class="lg:grid grid-cols-2 m-12 px-8 py-10 gap-6 items-center bg-gray-50 border border-primary shadow-inner"
+    >
+      <img
+        id="car-image"
+        alt="car image"
+        height="340"
+        class="rounded h-[340px] w-full object-cover border border-gray-200"
+      />
+      <div class="flex flex-col lg:items-start items-center gap-3 rounded lg:mt-0 mt-6">
+        <div class="flex items-center gap-8">
+          <h2
+            id="car-type"
+            class="p-1 text-primary font-bold bg-primary bg-opacity-15 rounded-full px-2 text-[14px]"
+          ></h2>
+          <h2 class="font-bold text-[#ffbf00] color text-[35px] self-center">
+            <span id="car-price"></span> <span class="text-[22px] text-gray-600">/ jours</span>
+          </h2>
+        </div>
+        <h2
+          class="font-bold text-3xl"
+          id="car-title"
+        ></h2>
+        <div class="flex gap-10 mt-4">
+          <div class="flex gap-2 text-lg items-center font-semibold">
+            <i class="fa-solid fa-users text-primary"></i>
+            <h2
+              id="car-seats"
+              class="text-gray-500"
+            ></h2>
+          </div>
+          <div class="flex gap-2 text-lg items-center font-semibold">
+            <i class="fa-solid fa-droplet text-primary"></i>
+            <h2
+              id="car-color"
+              class="text-gray-500"
+            ></h2>
+          </div>
+          <div class="flex gap-2 text-lg items-center font-semibold">
+            <i class="fa-solid fa-gauge text-primary"></i>
+            <h2
+              id="car-mileage"
+              class="text-gray-500"
+            ></h2>
+          </div>
+          <div class="flex gap-2 text-lg items-center font-semibold">
+            <i class="fa-solid fa-gas-pump text-primary"></i>
+            <h2
+              id="car-fuel"
+              class="text-gray-500"
+            ></h2>
+          </div>
+        </div>
+        <div class="grid grid-cols-2 mt-2 gap-x-10 gap-y-4">
+          <h2 class="text-lg">
+            <span class="font-bold">Maticule :</span>
+            <span
+              id="car-matricule"
+              class="text-gray-600"
+            ></span>
+          </h2>
+          <h2 class="text-lg">
+            <span class="font-bold">Carte grise :</span>
+            <span
+              id="car-carte-grise"
+              class="text-gray-600"
+            ></span>
+          </h2>
+          <h2 class="text-lg">
+            <span class="font-bold">Assurance :</span>
+            <span
+              id="car-assurance"
+              class="text-gray-600"
+            ></span>
+          </h2>
+          <h2 class="text-lg">
+            <span class="font-bold">Vignette :</span>
+            <span
+              id="car-vignette"
+              class="text-gray-600"
+            ></span>
+          </h2>
+          <h2 class="text-lg">
+            <span class="font-bold">Visite :</span>
+            <span
+              id="car-visite"
+              class="text-gray-600"
+            ></span>
+          </h2>
+          <h2 class="text-lg">
+            <span class="font-bold">Puissance fiscale :</span>
+            <span
+              id="car-power"
+              class="text-gray-600"
+            ></span>
+          </h2>
+          <h2 class="text-lg">
+            <span class="font-bold">Vitesse max :</span>
+            <span
+              id="car-speed"
+              class="text-gray-600"
+            ></span>
+          </h2>
+          <h2 class="text-lg">
+            <span class="font-bold">Transmission :</span>
+            <span
+              id="car-transmission"
+              class="text-gray-600"
+            ></span>
+          </h2>
+        </div>
+      </div>
+      <div class="col-span-2 self-start lg:mt-4 mt-8">
+        <form
+          id="reservationForm"
+          class="flex items-center gap-10"
+        >
+          <div class="flex gap-3 items-center">
+            <label
+              class="text-md font-medium text-gray-900 dark:text-white"
+              for="client"
+              >Client:</label
+            >
+            <select
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-[200px] p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              id="client_id"
+              name="client_id"
+            ></select>
+          </div>
+
+          <input
+            type="date"
+            id="date_reservation"
+            name="date_reservation"
+            hidden
+          />
+
+          <div class="flex gap-3 items-center">
+            <label class="text-md font-medium text-gray-900 dark:text-white">Date :</label>
+            <div
+              date-rangepicker
+              class="flex items-center"
+            >
+              <div class="relative">
+                <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                  <svg
+                    class="w-4 h-4 text-gray-500 dark:text-gray-400"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                  >
+                    <path
+                      d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z"
+                    />
+                  </svg>
+                </div>
+                <input
+                  name="date_debut"
+                  type="date"
+                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  placeholder="Select date start"
+                />
+              </div>
+              <span class="mx-4 text-gray-500">à</span>
+              <div class="relative">
+                <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                  <svg
+                    class="w-4 h-4 text-gray-500 dark:text-gray-400"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                  >
+                    <path
+                      d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z"
+                    />
+                  </svg>
+                </div>
+                <input
+                  name="date_fin"
+                  type="date"
+                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  placeholder="Select date end"
+                />
+              </div>
+            </div>
+          </div>
+
+          <input
+            type="number"
+            id="voiture_id"
+            name="voiture_id"
+            hidden
+          />
+
+          <div class="flex gap-3 items-center">
+            <div class="flex-row bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-[100px] p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+              <span class="font-bold">Total Price: </span><span id="total-price" >0</span>
+            </div>
+          </div>
+
+          <button
+            type="submit"
+            class="bg-primary text-white text-lg leading-6 font-bold py-3 px-10 rounded hover:bg-hover transition"
+          >
+            Reserver
+          </button>
+        </form>
+      </div>
+    </div>
+
+
+
+
+    <script>
+      // Extract the id from the URL
+      const urlParams = new URLSearchParams(window.location.search);
+      const id = urlParams.get('idcar');
+      let price
+      // Fetch the car data from the server
+      fetch(`https://swift-car-django-server-4c51acec5937.herokuapp.com/cars/view/${id}`)
+              .then(response => {
+                // Hide the spinner
+                document.getElementById('spinner').style.display = 'block';
+                return response.json();
+              })        .then(data => {
+          // Populate the HTML elements with the fetched data
+          document.getElementById('car-image').src = data.image;
+          document.getElementById('car-type').textContent = data.type;
+          document.getElementById('car-price').textContent = `${data.prix_par_jour} dhs`;
+          price =data.prix_par_jour;
+          document.getElementById(
+            'car-title'
+          ).textContent = `${data.marque} ${data.famille} - ${data.modele}`;
+          document.getElementById('car-seats').textContent = `${data.capacite_sieges} pers`;
+          document.getElementById('car-color').textContent = data.couleur;
+          document.getElementById('car-mileage').textContent = `${data.kilometrage} km`;
+          document.getElementById('car-fuel').textContent = data.carburant;
+          document.getElementById('car-matricule').textContent = data.matricule;
+          document.getElementById('car-carte-grise').textContent = data.carte_grise_id;
+          document.getElementById('car-assurance').textContent = data.assurance_date_fin;
+          document.getElementById('car-vignette').textContent = data.vignette_date_fin;
+          document.getElementById('car-visite').textContent = data.visite_date_fin;
+          document.getElementById('car-power').textContent = data.puissance_fiscale;
+          document.getElementById('car-speed').textContent = `${data.vitesse_max} Km/h`;
+          document.getElementById('car-transmission').textContent = data.transmission;
+          document.getElementById('car-id').value = data.id;
+        })
+              .catch(error => {
+                // Hide the spinner
+                document.getElementById('spinner').style.display = 'none';
+                console.error('Error:', error);
+              });
+      // Fetch the clients data from the server
+      fetch('https://swift-car-django-server-4c51acec5937.herokuapp.com/clients/view-all')
+              .then(response => {
+                // Hide the spinner
+                document.getElementById('spinner').style.display = 'block';
+                return response.json();
+              })              .then(data => {
+                const clientSelect = document.querySelector('#client_id');
+                data.forEach(client => {
+                  const option = document.createElement('option');
+                  option.value = client._id;
+                  option.textContent = client.name;
+                  clientSelect.appendChild(option);
+                });
+              })  .catch(error => {
+        // Hide the spinner
+        document.getElementById('spinner').style.display = 'none';
+        console.error('Error:', error);
+      });
+
+      // Handle the form submission
+      document.querySelector('#reservationForm').addEventListener('submit', event => {
+        event.preventDefault();
+
+        const formData = new FormData(event.target);
+        const data = Object.fromEntries(formData);
+
+        // Set the reservation date to today's date
+        const today = new Date();
+        const formattedDate = today.toISOString().split('T')[0];
+        data.date_reservation = formattedDate;
+
+        // Extract the car id from the URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const voiture_id = urlParams.get('idcar');
+        data.voiture_id = voiture_id;
+
+
+        const date_debut = new Date(data.date_debut);
+        const date_fin = new Date(data.date_fin);
+        const diffTime = Math.abs(date_fin - date_debut);
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+        // Set the manager id to 0
+        data.manager_id = "manager0";
+        data.prix = Number(price) * diffDays;
+        console.log(data.prix);
+
+        // Convert the data to JSON
+        const jsonData = JSON.stringify(data);
+
+        console.log(jsonData);
+
+        // Send the JSON data to the server
+        fetch('https://swift-car-django-server-4c51acec5937.herokuapp.com/reservations/add', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: jsonData
+        })
+                .then(response => response.json())
+                .then(data => {
+                  console.log('Success:', data);
+                  // Redirect to the /reservations page
+                  window.location.href = "/reservations";
+                })                .catch(error => console.error('Error:', error));
+      });
+      function updateTotalPrice() {
+        const priceElement = document.getElementById('car-price');
+        const startDateInput = document.querySelector('input[name="date_debut"]');
+        const endDateInput = document.querySelector('input[name="date_fin"]');
+        const totalPriceElement = document.getElementById('total-price');
+
+        const pricePerDay = parseFloat(priceElement.textContent.replace(/[^0-9.-]+/g,""));
+        const startDate = new Date(startDateInput.value);
+        const endDate = new Date(endDateInput.value);
+
+        if (!isNaN(startDate) && !isNaN(endDate) && startDate <= endDate) {
+          const timeDiff = Math.abs(endDate - startDate);
+          const daysDiff = Math.ceil(timeDiff / (1000 * 60 * 60 * 24)) + 1; // Including the end date
+          const totalPrice = daysDiff * pricePerDay;
+          totalPriceElement.textContent = totalPrice.toFixed(2);
+        } else {
+          totalPriceElement.textContent = '0';
+        }
+      }
+
+      document.querySelector('input[name="date_debut"]').addEventListener('input', updateTotalPrice);
+      document.querySelector('input[name="date_fin"]').addEventListener('input', updateTotalPrice);
+
+      window.addEventListener('DOMContentLoaded', (event) => {
+        // Mock data
+        const car = {
+          type: "SUV",
+          price: "50",
+          title: "Toyota Rav4",
+          seats: "5",
+          color: "Red",
+          mileage: "50000",
+          fuel: "Gasoline",
+          matricule: "XYZ123",
+          carteGrise: "123456789",
+          assurance: "Full Coverage",
+          vignette: "2023",
+          visite: "2023",
+          power: "120HP",
+          speed: "180km/h",
+          transmission: "Automatic",
+          image: "https://via.placeholder.com/340x340.png?text=Car+Image"
+        };
+
+        document.getElementById("car-type").textContent = car.type;
+        document.getElementById("car-price").textContent = car.price;
+        document.getElementById("car-title").textContent = car.title;
+        document.getElementById("car-seats").textContent = car.seats;
+        document.getElementById("car-color").textContent = car.color;
+        document.getElementById("car-mileage").textContent = car.mileage;
+        document.getElementById("car-fuel").textContent = car.fuel;
+        document.getElementById("car-matricule").textContent = car.matricule;
+        document.getElementById("car-carte-grise").textContent = car.carteGrise;
+        document.getElementById("car-assurance").textContent = car.assurance;
+        document.getElementById("car-vignette").textContent = car.vignette;
+        document.getElementById("car-visite").textContent = car.visite;
+        document.getElementById("car-power").textContent = car.power;
+        document.getElementById("car-speed").textContent = car.speed;
+        document.getElementById("car-transmission").textContent = car.transmission;
+        document.getElementById("car-image").src = car.image;
+      });
+    </script>
+  </body>
+</html>
