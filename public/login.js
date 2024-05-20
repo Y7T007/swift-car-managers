@@ -23,7 +23,7 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
             localStorage.setItem('token', data.token);
             localStorage.setItem('manager_id', data.manager_id);
             localStorage.setItem('manager_name', data.manager_name);
-            window.location.href = '/dashboard';
+            window.location.href = '/';
         })
         .catch(error => {
             console.error('Error:', error);
